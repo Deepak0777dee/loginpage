@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly — Page Not Found</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:#0F2645; --accent:#5BBFAA; --accent-light:#7ECFBE;
+      --secondary:#F5F8FF; --white:#fff; --text-secondary:#64748B;
+      --font-body:'Inter',sans-serif; --font-display:'Outfit',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body {
+      min-height:100vh; background:var(--primary);
+      font-family:var(--font-body); display:flex;
+      align-items:center; justify-content:center;
+      overflow:hidden; position:relative;
+    }
+    /* Background blobs */
+    .blob {
+      position:absolute; border-radius:50%; pointer-events:none;
+      animation:float 6s ease-in-out infinite;
+    }
+    .blob-1 { width:400px;height:400px; background:radial-gradient(circle,rgba(91,191,170,0.12),transparent 70%); top:-100px;right:-100px; }
+    .blob-2 { width:300px;height:300px; background:radial-gradient(circle,rgba(91,191,170,0.08),transparent 70%); bottom:-80px;left:-80px; animation-delay:-3s; }
+    .blob-3 { width:200px;height:200px; background:radial-gradient(circle,rgba(255,255,255,0.04),transparent 70%); top:40%;left:10%; animation-delay:-1.5s; }
+
+    .container {
+      position:relative; z-index:1; text-align:center;
+      padding:2rem 1.5rem; max-width:560px; width:100%;
+      animation:slideUp 0.6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .logo-wrap { margin-bottom:2.5rem; }
+    .logo-wrap img { height:44px; width:auto; margin:0 auto; filter:brightness(0) invert(1); }
+
+    .error-graphic {
+      position:relative; margin-bottom:2rem;
+      display:flex; align-items:center; justify-content:center; gap:0.25rem;
+    }
+    .four {
+      font-family:var(--font-display); font-size:clamp(5rem,20vw,9rem);
+      font-weight:800; line-height:1;
+      background:linear-gradient(135deg,var(--accent-light),var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    .zero-wrap {
+      position:relative; display:inline-flex;
+      align-items:center; justify-content:center;
+      width:clamp(5rem,20vw,9rem); height:clamp(5rem,20vw,9rem);
+    }
+    .zero-ring {
+      width:100%; height:100%; border-radius:50%;
+      border:6px solid var(--accent);
+      background:rgba(91,191,170,0.08);
+      animation:spin-slow 8s linear infinite;
+      position:relative;
+    }
+    .zero-ring::before {
+      content:''; position:absolute; top:-4px; left:50%; transform:translateX(-50%);
+      width:12px; height:12px; background:var(--accent); border-radius:50%;
+    }
+    .zero-inner {
+      position:absolute; font-family:var(--font-display);
+      font-size:clamp(2.5rem,10vw,4.5rem); font-weight:800;
+      color:rgba(255,255,255,0.15);
+    }
+
+    h1 { font-family:var(--font-display); font-size:clamp(1.25rem,4vw,1.625rem); font-weight:700; color:#fff; margin-bottom:0.75rem; }
+    p  { font-size:0.9375rem; color:rgba(255,255,255,0.6); margin-bottom:2rem; line-height:1.7; }
+
+    .btn-group { display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center; }
+    .btn-back {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      padding:0.8rem 1.75rem; border-radius:99px;
+      background:linear-gradient(135deg,var(--accent),#3DA090);
+      color:#fff; font-weight:600; font-size:0.9375rem;
+      border:none; cursor:pointer; transition:all 0.25s ease;
+      box-shadow:0 4px 20px rgba(91,191,170,0.4);
+      text-decoration:none;
+    }
+    .btn-back:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(91,191,170,0.55); }
+    .btn-home {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      padding:0.8rem 1.75rem; border-radius:99px;
+      background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.15);
+      color:#fff; font-weight:600; font-size:0.9375rem;
+      cursor:pointer; transition:all 0.25s ease; text-decoration:none;
+    }
+    .btn-home:hover { background:rgba(255,255,255,0.15); transform:translateY(-2px); }
+
+    .hint { margin-top:2.5rem; font-size:0.8125rem; color:rgba(255,255,255,0.3); }
+
+    @keyframes float    { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+    @keyframes slideUp  { from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);} }
+    @keyframes pulse    { 0%,100%{opacity:1;} 50%{opacity:0.8;} }
+    @keyframes spin-slow{ to{transform:rotate(360deg);} }
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="container">
+    <div class="logo-wrap">
+      <img src="assets/logo.png" alt="Stackly">
+    </div>
+
+    <div class="error-graphic">
+      <span class="four">4</span>
+      <div class="zero-wrap">
+        <div class="zero-ring"></div>
+        <span class="zero-inner">0</span>
+      </div>
+      <span class="four">4</span>
+    </div>
+
+    <h1>Page Not Found</h1>
+    <p>Oops! The page you're looking for doesn't exist or has been moved.<br>Let's get you back on track.</p>
+
+    <div class="btn-group">
+      <a href="javascript:history.back()" class="btn-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+        Go Back
+      </a>
+      <a href="index.html" class="btn-home">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Go to Login
+      </a>
+    </div>
+
+    <p class="hint">Error Code: 404 — Resource Not Available</p>
+  </div>
+</body>
+</html>
