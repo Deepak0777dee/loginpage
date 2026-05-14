@@ -39,12 +39,13 @@
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { font-size:16px; }
-body { font-family:var(--font-body); color:var(--text-primary); background:var(--secondary); -webkit-font-smoothing:antialiased; }
+html { font-size:16px; overflow-x:hidden; }
+body { font-family:var(--font-body); color:var(--text-primary); background:var(--secondary); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
 a { text-decoration:none; color:inherit; }
 
+
 /* ── Dashboard Shell ───────────────────────────────── */
-.dash-shell { display:flex; min-height:100vh; }
+.dash-shell { display:flex; min-height:100vh; overflow-x:hidden; width:100%; }
 
 /* ── Sidebar ───────────────────────────────────────── */
 .sidebar {
@@ -122,7 +123,8 @@ a { text-decoration:none; color:inherit; }
 .btn-logout svg { width:18px; height:18px; }
 
 /* ── Main ──────────────────────────────────────────── */
-.dash-main { flex:1; display:flex; flex-direction:column; min-height:100vh; }
+/* min-width:0 prevents flex children from overflowing their container */
+.dash-main { flex:1; min-width:0; display:flex; flex-direction:column; min-height:100vh; max-width:100%; }
 
 /* Top Header */
 .dash-header {
@@ -166,7 +168,7 @@ a { text-decoration:none; color:inherit; }
 }
 
 /* ── Page Content ──────────────────────────────────── */
-.dash-content { flex:1; padding:1.25rem; }
+.dash-content { flex:1; padding:1.25rem; width:100%; min-width:0; overflow-x:hidden; }
 .content-header { margin-bottom:1.5rem; }
 .content-header h1 { font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--primary); }
 .content-header p  { font-size:0.875rem; color:var(--text-secondary); margin-top:0.25rem; }
@@ -230,7 +232,7 @@ a { text-decoration:none; color:inherit; }
 }
 .dash-table tr:last-child td { border-bottom:none; }
 .dash-table tr:hover td { background:var(--secondary); }
-.table-wrap { overflow-x:auto; }
+.table-wrap { overflow-x:auto; max-width:100%; -webkit-overflow-scrolling:touch; }
 
 /* ── Status Pill ───────────────────────────────────── */
 .pill {

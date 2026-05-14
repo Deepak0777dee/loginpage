@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly — Profile</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    .profile-layout{display:grid;grid-template-columns:1fr;gap:1.25rem}
+    @media(min-width:900px){.profile-layout{grid-template-columns:300px 1fr}}
+    .profile-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:2rem 1.5rem;text-align:center}
+    .profile-av{width:80px;height:80px;border-radius:50%;background:var(--accent);color:#fff;font-size:2rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+    .profile-name{font-size:1.25rem;font-weight:700;color:var(--text-primary)}
+    .profile-role-badge{display:inline-flex;align-items:center;gap:.4rem;margin-top:.4rem;padding:.3rem .9rem;border-radius:99px;font-size:.8rem;font-weight:600}
+    .badge-consultant{background:rgba(91,191,170,.12);color:#2E9E8A}
+    .badge-admin{background:rgba(239,68,68,.12);color:#DC2626}
+    .profile-email{margin-top:.75rem;font-size:.875rem;color:var(--text-muted)}
+    .profile-since{font-size:.8rem;color:var(--text-muted);margin-top:.3rem}
+    .profile-stats{display:flex;justify-content:center;gap:2rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+    .ps-item{text-align:center}
+    .ps-val{font-size:1.25rem;font-weight:700;color:var(--text-primary)}
+    .ps-lbl{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
+    .form-section{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem}
+    .form-section h3{font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+    .field-row{display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1rem}
+    @media(min-width:500px){.field-row{grid-template-columns:1fr 1fr}}
+    .field label{display:block;font-size:.8125rem;font-weight:600;color:var(--text-secondary);margin-bottom:.4rem}
+    .field input,.field select,.field textarea{width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--radius-md);font-size:.875rem;background:var(--surface);color:var(--text-primary);transition:border-color .2s;font-family:inherit}
+    .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+    .field textarea{resize:vertical;min-height:80px}
+    .field input[readonly]{background:var(--bg);color:var(--text-muted);cursor:not-allowed}
+    .btn-save{padding:.7rem 1.5rem;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);font-size:.9rem;font-weight:600;cursor:pointer;transition:background .2s}
+    .btn-save:hover{background:var(--accent-dark)}
+    .btn-sec{padding:.7rem 1.5rem;background:transparent;color:var(--text-secondary);border:1.5px solid var(--border);border-radius:var(--radius-md);font-size:.9rem;font-weight:600;cursor:pointer;transition:border-color .2s}
+    .btn-sec:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-danger{padding:.7rem 1.5rem;background:transparent;color:#EF4444;border:1.5px solid #EF4444;border-radius:var(--radius-md);font-size:.9rem;font-weight:600;cursor:pointer}
+    .action-bar{display:flex;align-items:center;justify-content:flex-end;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+    .notif-toggle{display:flex;align-items:center;justify-content:space-between;padding:.875rem 0;border-bottom:1px solid var(--border)}
+    .notif-toggle:last-child{border-bottom:none}
+    .notif-info p{font-size:.9rem;font-weight:600;color:var(--text-primary)}
+    .notif-info span{font-size:.8rem;color:var(--text-muted)}
+    .toggle-sw{width:44px;height:24px;background:var(--border);border-radius:99px;cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0}
+    .toggle-sw.on{background:var(--accent)}
+    .toggle-sw::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+    .toggle-sw.on::after{left:23px}
+    .save-toast{position:fixed;bottom:2rem;right:2rem;background:var(--accent);color:#fff;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-size:.875rem;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.15);transform:translateY(100px);opacity:0;transition:all .3s;z-index:999}
+    .save-toast.show{transform:translateY(0);opacity:1}
+  </style>
+</head>
+<body>
+<div class="dash-shell">
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="assets/logo.png" alt="Stackly" class="sidebar-logo">
+      <button class="sidebar-close" id="sidebarClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">?</div>
+      <div class="user-info"><div class="user-name" id="sidebarName">Loading…</div><div class="user-role" id="sidebarRole">—</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item" id="navBack" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</a>
+      <a class="nav-item" href="projects.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</a>
+      <a class="nav-item" href="reports.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Reports</a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item active" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+    </nav>
+    <div class="sidebar-footer"><button class="btn-logout" id="logoutBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Log Out</button></div>
+  </aside>
+
+  <div class="dash-main">
+    <header class="dash-header">
+      <div class="header-left">
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <span class="page-title">Profile</span>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" onclick="window.location.href='404.html'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-dot"></span></button>
+        <div class="header-avatar" id="headerAvatar">?</div>
+      </div>
+    </header>
+    <main class="dash-content">
+      <div class="content-header"><h1>My Profile</h1><p>Manage your account details and preferences.</p></div>
+
+      <div class="profile-layout">
+        <!-- Left: Profile Card -->
+        <div>
+          <div class="profile-card">
+            <div class="profile-av" id="profileAv">?</div>
+            <div class="profile-name" id="profileName">—</div>
+            <div><span class="profile-role-badge" id="profileRoleBadge">—</span></div>
+            <div class="profile-email" id="profileEmail">—</div>
+            <div class="profile-since" id="profileSince">—</div>
+            <div class="profile-stats">
+              <div class="ps-item"><div class="ps-val">12</div><div class="ps-lbl">Projects</div></div>
+              <div class="ps-item"><div class="ps-val">24</div><div class="ps-lbl">Clients</div></div>
+              <div class="ps-item"><div class="ps-val">4.9</div><div class="ps-lbl">Rating</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Edit Forms -->
+        <div style="display:flex;flex-direction:column;gap:1.25rem">
+          <!-- Personal Info -->
+          <div class="form-section">
+            <h3>👤 Personal Information</h3>
+            <div class="field-row">
+              <div class="field"><label>Full Name</label><input type="text" id="fldName" placeholder="Your name"></div>
+              <div class="field"><label>Display Name</label><input type="text" id="fldDisplay" placeholder="How you appear"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Email Address</label><input type="email" id="fldEmail" readonly></div>
+              <div class="field"><label>Role</label><input type="text" id="fldRole" readonly></div>
+            </div>
+            <div class="field"><label>Bio</label><textarea id="fldBio" placeholder="Tell us a bit about yourself…"></textarea></div>
+            <div class="field-row">
+              <div class="field"><label>Phone</label><input type="tel" id="fldPhone" placeholder="+1 (555) 000-0000"></div>
+              <div class="field"><label>Location</label><input type="text" id="fldLocation" placeholder="City, Country"></div>
+            </div>
+            <div class="action-bar">
+              <button class="btn-sec" onclick="loadProfile()">Reset</button>
+              <button class="btn-save" onclick="saveProfile()">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- Security -->
+          <div class="form-section">
+            <h3>🔐 Security</h3>
+            <div class="field-row">
+              <div class="field"><label>Current Password</label><input type="password" id="fldCurPw" placeholder="Enter current password"></div>
+              <div class="field"><label>New Password</label><input type="password" id="fldNewPw" placeholder="Min. 8 characters"></div>
+            </div>
+            <div class="action-bar">
+              <button class="btn-save" onclick="changePassword()">Update Password</button>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="form-section">
+            <h3>🔔 Notification Preferences</h3>
+            <div class="notif-toggle"><div class="notif-info"><p>Email Notifications</p><span>Receive updates via email</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="notif-toggle"><div class="notif-info"><p>Project Alerts</p><span>Get notified on project changes</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="notif-toggle"><div class="notif-info"><p>Client Messages</p><span>Notify me of new client messages</span></div><button class="toggle-sw" onclick="this.classList.toggle('on')"></button></div>
+            <div class="notif-toggle"><div class="notif-info"><p>Monthly Reports</p><span>Auto-send monthly summaries</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="form-section">
+            <h3>⚠️ Danger Zone</h3>
+            <p style="font-size:.875rem;color:var(--text-muted);margin-bottom:1rem">These actions are irreversible. Please proceed with caution.</p>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+              <button class="btn-danger" onclick="if(confirm('Clear all local data?')){localStorage.clear();window.location.href='index.html';}">Clear Local Data</button>
+              <button class="btn-sec" onclick="logout()">Log Out Everywhere</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="save-toast" id="toast">✅ Changes saved!</div>
+
+<script src="auth.js"></script>
+<script>
+  const session = requireAuth();
+
+  function loadProfile() {
+    if (!session) return;
+    document.getElementById('sidebarAvatar').textContent = session.avatar;
+    document.getElementById('headerAvatar').textContent  = session.avatar;
+    document.getElementById('sidebarName').textContent   = session.name;
+    document.getElementById('sidebarRole').textContent   = session.role === 'admin' ? 'Administrator' : 'Consultant';
+    document.getElementById('navBack').href = getDashboardUrl(session.role);
+
+    document.getElementById('profileAv').textContent   = session.avatar;
+    document.getElementById('profileName').textContent = session.name;
+    document.getElementById('profileEmail').textContent= '📧 ' + session.email;
+    document.getElementById('profileSince').textContent= '📅 Member since ' + new Date(session.createdAt).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+
+    const badge = document.getElementById('profileRoleBadge');
+    badge.textContent = session.role === 'admin' ? '🛡️ Administrator' : '💼 Consultant';
+    badge.className = 'profile-role-badge ' + (session.role === 'admin' ? 'badge-admin' : 'badge-consultant');
+
+    document.getElementById('fldName').value    = session.name;
+    document.getElementById('fldDisplay').value = session.avatar;
+    document.getElementById('fldEmail').value   = session.email;
+    document.getElementById('fldRole').value    = session.role === 'admin' ? 'Administrator' : 'Consultant';
+  }
+  loadProfile();
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function saveProfile() {
+    const name = document.getElementById('fldName').value.trim();
+    if (!name) { alert('Name cannot be empty.'); return; }
+    const users = getUsers();
+    const idx = users.findIndex(u => u.email === session.email);
+    if (idx > -1) {
+      users[idx].name = name;
+      users[idx].avatar = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      localStorage.setItem('stackly_users', JSON.stringify(users));
+      setSession(users[idx]);
+    }
+    showToast('✅ Profile updated!');
+    loadProfile();
+  }
+
+  function changePassword() {
+    const cur = document.getElementById('fldCurPw').value;
+    const nw  = document.getElementById('fldNewPw').value;
+    if (!cur || !nw) { alert('Please fill both password fields.'); return; }
+    if (nw.length < 8) { alert('New password must be at least 8 characters.'); return; }
+    if (cur !== session.password) { alert('Current password is incorrect.'); return; }
+    const users = getUsers();
+    const idx = users.findIndex(u => u.email === session.email);
+    if (idx > -1) { users[idx].password = nw; localStorage.setItem('stackly_users', JSON.stringify(users)); setSession(users[idx]); }
+    document.getElementById('fldCurPw').value = '';
+    document.getElementById('fldNewPw').value = '';
+    showToast('🔐 Password updated!');
+  }
+
+  const sb=document.getElementById('sidebar'),ov=document.getElementById('overlay');
+  document.getElementById('hamburger').addEventListener('click',()=>{sb.classList.add('open');ov.classList.add('show')});
+  document.getElementById('sidebarClose').addEventListener('click',()=>{sb.classList.remove('open');ov.classList.remove('show')});
+  ov.addEventListener('click',()=>{sb.classList.remove('open');ov.classList.remove('show')});
+  document.getElementById('logoutBtn').addEventListener('click',logout);
+</script>
+</body>
+</html>

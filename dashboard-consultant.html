@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,233 +8,336 @@
   <title>Stackly — Consultant Dashboard</title>
   <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
-<div class="dash-shell">
+  <div class="dash-shell">
 
-  <!-- ── Sidebar Overlay (mobile) ──────────────────── -->
-  <div class="sidebar-overlay" id="overlay"></div>
+    <!-- ── Sidebar Overlay (mobile) ──────────────────── -->
+    <div class="sidebar-overlay" id="overlay"></div>
 
-  <!-- ── Sidebar ───────────────────────────────────── -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <img src="assets/logo.png" alt="Stackly" class="sidebar-logo">
-      <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-
-    <div class="sidebar-user">
-      <div class="user-avatar" id="sidebarAvatar">JC</div>
-      <div class="user-info">
-        <div class="user-name" id="sidebarName">Jane Consultant</div>
-        <div class="user-role">Consultant</div>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <span class="nav-section-label">Main</span>
-      <a class="nav-item active" id="navOverview" href="#overview" data-section="overview">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Overview
-      </a>
-      <a class="nav-item" href="404.html" id="navClients">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Clients
-      </a>
-      <a class="nav-item" href="404.html" id="navProjects">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-        Projects
-      </a>
-      <a class="nav-item" href="404.html" id="navReports">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Reports
-      </a>
-      <span class="nav-section-label">Account</span>
-      <a class="nav-item" href="404.html" id="navProfile">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Profile
-      </a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <button class="btn-logout" id="logoutBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Log Out
-      </button>
-    </div>
-  </aside>
-
-  <!-- ── Main ──────────────────────────────────────── -->
-  <div class="dash-main">
-    <!-- Header -->
-    <header class="dash-header">
-      <div class="header-left">
-        <button class="hamburger" id="hamburger" aria-label="Open menu">
-          <span></span><span></span><span></span>
+    <!-- ── Sidebar ───────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="assets/logo.png" alt="Stackly" class="sidebar-logo">
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
         </button>
-        <span class="page-title" id="pageTitle">Dashboard</span>
       </div>
-      <div class="header-right">
-        <button class="notif-btn" aria-label="Notifications" onclick="window.location.href='404.html'">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="notif-dot"></span>
+
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">JC</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">Jane Consultant</div>
+          <div class="user-role">Consultant</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Main</span>
+        <a class="nav-item active" id="navOverview" href="#overview" data-section="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg>
+          Overview
+        </a>
+
+        <a class="nav-item" href="projects.html" id="navProjects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+          </svg>
+          Projects
+        </a>
+        <a class="nav-item" href="reports.html" id="navReports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          Reports
+        </a>
+        <span class="nav-section-label">Account</span>
+        <a class="nav-item" href="profile.html" id="navProfile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          Profile
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Log Out
         </button>
-        <div class="header-avatar" id="headerAvatar">JC</div>
       </div>
-    </header>
+    </aside>
 
-    <!-- Content -->
-    <main class="dash-content">
-
-      <!-- ── Overview Section ─────────────────────── -->
-      <section id="overview" class="dash-section">
-        <div class="content-header">
-          <h1 id="greetingText">Good morning 👋</h1>
-          <p id="greetingName">Welcome back, Jane! Here's what's happening with your clients.</p>
+    <!-- ── Main ──────────────────────────────────────── -->
+    <div class="dash-main">
+      <!-- Header -->
+      <header class="dash-header">
+        <div class="header-left">
+          <button class="hamburger" id="hamburger" aria-label="Open menu">
+            <span></span><span></span><span></span>
+          </button>
+          <span class="page-title" id="pageTitle">Dashboard</span>
         </div>
-
-        <!-- Stat Cards -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-card-header">
-              <div class="stat-icon teal">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              </div>
-              <span class="stat-badge badge-up">↑ 12%</span>
-            </div>
-            <div class="stat-value">24</div>
-            <div class="stat-label">Active Clients</div>
-          </div>
-          <div class="stat-card" style="animation-delay:0.08s">
-            <div class="stat-card-header">
-              <div class="stat-icon navy">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-              </div>
-              <span class="stat-badge badge-up">↑ 5%</span>
-            </div>
-            <div class="stat-value">8</div>
-            <div class="stat-label">Ongoing Projects</div>
-          </div>
-          <div class="stat-card" style="animation-delay:0.16s">
-            <div class="stat-card-header">
-              <div class="stat-icon green">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <span class="stat-badge badge-up">↑ 23%</span>
-            </div>
-            <div class="stat-value">47</div>
-            <div class="stat-label">Completed</div>
-          </div>
-          <div class="stat-card" style="animation-delay:0.24s">
-            <div class="stat-card-header">
-              <div class="stat-icon orange">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              </div>
-              <span class="stat-badge badge-up">↑ 8%</span>
-            </div>
-            <div class="stat-value">$84K</div>
-            <div class="stat-label">Revenue (YTD)</div>
-          </div>
+        <div class="header-right">
+          <button class="notif-btn" aria-label="Notifications" onclick="window.location.href='404.html'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notif-dot"></span>
+          </button>
+          <div class="header-avatar" id="headerAvatar">JC</div>
         </div>
+      </header>
 
-        <!-- Charts + Activity Row -->
-        <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;">
-          <!-- Monthly Performance -->
-          <div class="section-card">
-            <div class="section-card-header">
-              <h3>Monthly Performance</h3>
-              <span style="font-size:0.8rem;color:var(--text-muted);">Last 6 months</span>
-            </div>
-            <div class="section-card-body">
-              <div class="chart-bars" id="perfChart">
-                <div class="chart-bar" style="height:45%"><span>Dec</span></div>
-                <div class="chart-bar" style="height:60%"><span>Jan</span></div>
-                <div class="chart-bar" style="height:50%"><span>Feb</span></div>
-                <div class="chart-bar" style="height:75%"><span>Mar</span></div>
-                <div class="chart-bar" style="height:65%"><span>Apr</span></div>
-                <div class="chart-bar" style="height:90%;background:var(--accent);"><span>May</span></div>
+      <!-- Content -->
+      <main class="dash-content">
+
+        <!-- ── Overview Section ─────────────────────── -->
+        <section id="overview" class="dash-section">
+          <div class="content-header">
+            <h1 id="greetingText">Good morning 👋</h1>
+            <p id="greetingName">Welcome back, Jane! Here's what's happening with your clients.</p>
+          </div>
+
+          <!-- Stat Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div class="stat-icon teal">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                  </svg>
+                </div>
+                <span class="stat-badge badge-up">↑ 12%</span>
               </div>
-              <div style="height:24px;"></div>
+              <div class="stat-value">24</div>
+              <div class="stat-label">Active Clients</div>
+            </div>
+            <div class="stat-card" style="animation-delay:0.08s">
+              <div class="stat-card-header">
+                <div class="stat-icon navy">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <span class="stat-badge badge-up">↑ 5%</span>
+              </div>
+              <div class="stat-value">8</div>
+              <div class="stat-label">Ongoing Projects</div>
+            </div>
+            <div class="stat-card" style="animation-delay:0.16s">
+              <div class="stat-card-header">
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <span class="stat-badge badge-up">↑ 23%</span>
+              </div>
+              <div class="stat-value">47</div>
+              <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card" style="animation-delay:0.24s">
+              <div class="stat-card-header">
+                <div class="stat-icon orange">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </div>
+                <span class="stat-badge badge-up">↑ 8%</span>
+              </div>
+              <div class="stat-value">$84K</div>
+              <div class="stat-label">Revenue (YTD)</div>
             </div>
           </div>
 
-          <!-- Recent Clients -->
-          <div class="section-card">
-            <div class="section-card-header">
-              <h3>Recent Clients</h3>
-              <a href="#clients" class="link-sm">View all →</a>
+          <!-- Charts + Activity Row -->
+          <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;">
+            <!-- Monthly Performance -->
+            <div class="section-card">
+              <div class="section-card-header">
+                <h3>Monthly Performance</h3>
+                <span style="font-size:0.8rem;color:var(--text-muted);">Last 6 months</span>
+              </div>
+              <div class="section-card-body">
+                <div class="chart-bars" id="perfChart">
+                  <div class="chart-bar" style="height:45%"><span>Dec</span></div>
+                  <div class="chart-bar" style="height:60%"><span>Jan</span></div>
+                  <div class="chart-bar" style="height:50%"><span>Feb</span></div>
+                  <div class="chart-bar" style="height:75%"><span>Mar</span></div>
+                  <div class="chart-bar" style="height:65%"><span>Apr</span></div>
+                  <div class="chart-bar" style="height:90%;background:var(--accent);"><span>May</span></div>
+                </div>
+                <div style="height:24px;"></div>
+              </div>
             </div>
-            <div class="section-card-body" style="padding:0;">
-              <div class="table-wrap">
-                <table class="dash-table">
-                  <thead><tr><th>Client</th><th>Industry</th><th>Status</th><th>Since</th></tr></thead>
-                  <tbody>
-                    <tr><td><b>Meridian Corp</b></td><td>Finance</td><td><span class="pill active">Active</span></td><td>Jan 2025</td></tr>
-                    <tr><td><b>Nova Systems</b></td><td>Technology</td><td><span class="pill active">Active</span></td><td>Mar 2025</td></tr>
-                    <tr><td><b>Apex Retail</b></td><td>Retail</td><td><span class="pill pending">Pending</span></td><td>Apr 2025</td></tr>
-                    <tr><td><b>SkyBridge</b></td><td>Logistics</td><td><span class="pill completed">Completed</span></td><td>Feb 2025</td></tr>
-                    <tr><td><b>Vantage Health</b></td><td>Healthcare</td><td><span class="pill active">Active</span></td><td>May 2025</td></tr>
-                  </tbody>
-                </table>
+
+            <!-- Recent Clients -->
+            <div class="section-card">
+              <div class="section-card-header">
+                <h3>Recent Clients</h3>
+                <a href="#clients" class="link-sm">View all →</a>
+              </div>
+              <div class="section-card-body" style="padding:0;">
+                <div class="table-wrap">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Client</th>
+                        <th>Industry</th>
+                        <th>Status</th>
+                        <th>Since</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><b>Meridian Corp</b></td>
+                        <td>Finance</td>
+                        <td><span class="pill active">Active</span></td>
+                        <td>Jan 2025</td>
+                      </tr>
+                      <tr>
+                        <td><b>Nova Systems</b></td>
+                        <td>Technology</td>
+                        <td><span class="pill active">Active</span></td>
+                        <td>Mar 2025</td>
+                      </tr>
+                      <tr>
+                        <td><b>Apex Retail</b></td>
+                        <td>Retail</td>
+                        <td><span class="pill pending">Pending</span></td>
+                        <td>Apr 2025</td>
+                      </tr>
+                      <tr>
+                        <td><b>SkyBridge</b></td>
+                        <td>Logistics</td>
+                        <td><span class="pill completed">Completed</span></td>
+                        <td>Feb 2025</td>
+                      </tr>
+                      <tr>
+                        <td><b>Vantage Health</b></td>
+                        <td>Healthcare</td>
+                        <td><span class="pill active">Active</span></td>
+                        <td>May 2025</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="section-card">
+              <div class="section-card-header">
+                <h3>Recent Activity</h3>
+              </div>
+              <div class="section-card-body">
+                <div class="activity-feed">
+                  <div class="activity-item">
+                    <div class="activity-dot teal">📋</div>
+                    <div class="activity-text">
+                      <p>Proposal sent to <b>Meridian Corp</b></p><span>2 hours ago</span>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-dot green">✅</div>
+                    <div class="activity-text">
+                      <p>Project <b>Q2 Strategy</b> marked complete</p><span>Yesterday</span>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-dot navy">📞</div>
+                    <div class="activity-text">
+                      <p>Call scheduled with <b>Nova Systems</b></p><span>2 days ago</span>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-dot teal">📄</div>
+                    <div class="activity-text">
+                      <p>Report submitted for <b>Apex Retail</b></p><span>3 days ago</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <!-- Activity Feed -->
-          <div class="section-card">
-            <div class="section-card-header"><h3>Recent Activity</h3></div>
-            <div class="section-card-body">
-              <div class="activity-feed">
-                <div class="activity-item"><div class="activity-dot teal">📋</div><div class="activity-text"><p>Proposal sent to <b>Meridian Corp</b></p><span>2 hours ago</span></div></div>
-                <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-text"><p>Project <b>Q2 Strategy</b> marked complete</p><span>Yesterday</span></div></div>
-                <div class="activity-item"><div class="activity-dot navy">📞</div><div class="activity-text"><p>Call scheduled with <b>Nova Systems</b></p><span>2 days ago</span></div></div>
-                <div class="activity-item"><div class="activity-dot teal">📄</div><div class="activity-text"><p>Report submitted for <b>Apex Retail</b></p><span>3 days ago</span></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
+      </main>
+    </div>
   </div>
-</div>
 
-<script src="auth.js"></script>
-<script>
-  // ── Route guard ───────────────────────────────────
-  const session = requireAuth();
-  if (session && session.role !== 'consultant') window.location.href = 'dashboard-admin.html';
+  <script src="auth.js"></script>
+  <script>
+    // ── Route guard ───────────────────────────────────
+    const session = requireAuth();
+    if (session && session.role !== 'consultant') window.location.href = 'dashboard-admin.html';
 
-  // ── Populate user info ────────────────────────────
-  if (session) {
-    document.getElementById('sidebarAvatar').textContent = session.avatar || session.name[0];
-    document.getElementById('headerAvatar').textContent  = session.avatar || session.name[0];
-    document.getElementById('sidebarName').textContent   = session.name;
-    document.getElementById('greetingName').textContent  = `Welcome back, ${session.name.split(' ')[0]}! Here's what's happening with your clients.`;
-  }
+    // ── Populate user info ────────────────────────────
+    if (session) {
+      document.getElementById('sidebarAvatar').textContent = session.avatar || session.name[0];
+      document.getElementById('headerAvatar').textContent = session.avatar || session.name[0];
+      document.getElementById('sidebarName').textContent = session.name;
+      document.getElementById('greetingName').textContent = `Welcome back, ${session.name.split(' ')[0]}! Here's what's happening with your clients.`;
+    }
 
-  // ── Greeting ──────────────────────────────────────
-  const hr = new Date().getHours();
-  document.getElementById('greetingText').textContent =
-    hr < 12 ? 'Good morning 👋' : hr < 17 ? 'Good afternoon 👋' : 'Good evening 👋';
+    // ── Greeting ──────────────────────────────────────
+    const hr = new Date().getHours();
+    document.getElementById('greetingText').textContent =
+      hr < 12 ? 'Good morning 👋' : hr < 17 ? 'Good afternoon 👋' : 'Good evening 👋';
 
-  // ── Sidebar toggle ────────────────────────────────
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  function openSidebar()  { sidebar.classList.add('open'); overlay.classList.add('show'); }
-  function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
-  document.getElementById('hamburger').addEventListener('click', openSidebar);
-  document.getElementById('sidebarClose').addEventListener('click', closeSidebar);
-  overlay.addEventListener('click', closeSidebar);
+    // ── Sidebar toggle ────────────────────────────────
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('show'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+    document.getElementById('hamburger').addEventListener('click', openSidebar);
+    document.getElementById('sidebarClose').addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
 
-  // ── Logout ────────────────────────────────────────
-  document.getElementById('logoutBtn').addEventListener('click', logout);
-</script>
-<style>
-  .link-sm { font-size:0.8125rem; color:var(--accent-dark); font-weight:500; }
-  .link-sm:hover { text-decoration:underline; }
-  @media(min-width:768px){ [style*="grid-template-columns:1fr"] { grid-template-columns:1fr 1fr !important; } }
-  @media(min-width:1200px){ [style*="grid-template-columns:1fr"] { grid-template-columns:2fr 1fr !important; } }
-</style>
+    // ── Logout ────────────────────────────────────────
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+  </script>
+  <style>
+    .link-sm {
+      font-size: 0.8125rem;
+      color: var(--accent-dark);
+      font-weight: 500;
+    }
+
+    .link-sm:hover {
+      text-decoration: underline;
+    }
+
+    @media(min-width:768px) {
+      [style*="grid-template-columns:1fr"] {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    @media(min-width:1200px) {
+      [style*="grid-template-columns:1fr"] {
+        grid-template-columns: 2fr 1fr !important;
+      }
+    }
+  </style>
 </body>
+
 </html>

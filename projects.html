@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stackly — Projects overview and tracking.">
+  <title>Stackly — Projects</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* ── Icon system ──────────────────────────────── */
+    .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;display:inline-block;vertical-align:middle}
+    .ic-sm{width:16px;height:16px}
+    .ic-lg{width:22px;height:22px}
+
+    /* ── Toolbar ──────────────────────────────────── */
+    .toolbar{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .search-box{flex:1;min-width:180px;position:relative}
+    .search-box input{width:100%;padding:.65rem 1rem .65rem 2.5rem;border:1.5px solid var(--border);border-radius:var(--radius-md);font-size:.875rem;background:var(--surface);color:var(--text-primary);transition:border-color .2s;font-family:inherit}
+    .search-box input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,191,170,.1)}
+    .s-icon{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none}
+    .flt-sel{padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-md);font-size:.875rem;background:var(--surface);color:var(--text-primary);cursor:pointer;font-family:inherit}
+    .flt-sel:focus{outline:none;border-color:var(--accent)}
+    .btn-add{padding:.65rem 1.25rem;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);font-size:.875rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.5rem;white-space:nowrap;transition:background .2s,box-shadow .2s}
+    .btn-add:hover{background:var(--accent-dark);box-shadow:0 4px 12px rgba(91,191,170,.3)}
+
+    /* ── Project list ─────────────────────────────── */
+    .proj-list{display:flex;flex-direction:column;gap:1rem}
+    .pj{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:0;overflow:hidden;transition:box-shadow .2s,transform .2s;display:grid;grid-template-columns:4px 1fr}
+    .pj:hover{box-shadow:0 6px 24px rgba(15,38,69,.1);transform:translateY(-1px)}
+    .pj-stripe{border-radius:0}
+    .pj-stripe.inprogress{background:var(--accent)}
+    .pj-stripe.completed{background:#3B82F6}
+    .pj-stripe.pending{background:#F59E0B}
+    .pj-stripe.onhold{background:#94A3B8}
+    .pj-body{padding:1.25rem}
+    .pj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.875rem}
+    .pj-title{font-weight:700;font-size:.9375rem;color:var(--text-primary);line-height:1.4}
+    .pj-client{font-size:.8rem;color:var(--text-muted);margin-top:.2rem;display:flex;align-items:center;gap:.35rem}
+    .pj-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:.875rem}
+    .pj-meta-item{display:flex;align-items:center;gap:.4rem;font-size:.8125rem;color:var(--text-secondary)}
+    .pj-meta-item .ic{color:var(--text-muted)}
+    .pj-progress-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-muted);margin-bottom:.4rem;font-weight:500}
+    .pj-bar-bg{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+    .pj-bar-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+    .pj-bar-fill.inprogress{background:var(--accent)}
+    .pj-bar-fill.completed{background:#3B82F6}
+    .pj-bar-fill.pending{background:#F59E0B}
+    .pj-bar-fill.onhold{background:#94A3B8}
+
+    /* ── Team avatars ─────────────────────────────── */
+    .team-stack{display:flex}
+    .t-av{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--surface);margin-left:-8px;flex-shrink:0}
+    .t-av:first-child{margin-left:0}
+    .t-av:nth-child(2){background:#0F2645}
+    .t-av:nth-child(3){background:#5B8BDF}
+
+    /* ── Status pills ─────────────────────────────── */
+    .pill{padding:.25rem .8rem;border-radius:99px;font-size:.75rem;font-weight:600;display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap}
+    .pill.inprogress,.pill.active{background:rgba(91,191,170,.12);color:#1E8F7B}
+    .pill.completed{background:rgba(59,130,246,.12);color:#2563EB}
+    .pill.pending{background:rgba(245,158,11,.12);color:#B45309}
+    .pill.onhold{background:rgba(148,163,184,.12);color:#64748B}
+
+    /* ── Empty state ──────────────────────────────── */
+    .empty-state{text-align:center;padding:3.5rem 1rem;color:var(--text-muted)}
+    .empty-state svg{opacity:.3;margin-bottom:.875rem}
+    .empty-state p{font-size:.9375rem}
+
+    /* ── Section header pill ──────────────────────── */
+    .count-pill{padding:.2rem .7rem;background:var(--bg);border:1.5px solid var(--border);border-radius:99px;font-size:.78rem;font-weight:600;color:var(--text-secondary)}
+  </style>
+</head>
+<body>
+
+<!-- ── Shared SVG Icon Sprite ──────────────────────── -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ic-overview" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="ic-projects" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="ic-reports" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="ic-profile" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ic-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+  <symbol id="ic-close" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></symbol>
+  <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+  <symbol id="ic-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="ic-dollar" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+  <symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="ic-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="ic-trending-up" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+  <symbol id="ic-activity" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+</svg>
+
+<div class="dash-shell">
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="assets/logo.png" alt="Stackly" class="sidebar-logo">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+        <svg class="ic ic-sm" aria-hidden="true"><use href="#ic-close"/></svg>
+      </button>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">?</div>
+      <div class="user-info"><div class="user-name" id="sidebarName">Loading…</div><div class="user-role" id="sidebarRole">—</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item" id="navBack" href="#">
+        <svg class="ic" aria-hidden="true"><use href="#ic-overview"/></svg>Overview
+      </a>
+      <a class="nav-item active" href="projects.html">
+        <svg class="ic" aria-hidden="true"><use href="#ic-projects"/></svg>Projects
+      </a>
+      <a class="nav-item" href="reports.html">
+        <svg class="ic" aria-hidden="true"><use href="#ic-reports"/></svg>Reports
+      </a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item" href="profile.html">
+        <svg class="ic" aria-hidden="true"><use href="#ic-profile"/></svg>Profile
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" id="logoutBtn">
+        <svg class="ic" aria-hidden="true"><use href="#ic-logout"/></svg>Log Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="dash-main">
+    <header class="dash-header">
+      <div class="header-left">
+        <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+        <span class="page-title">Projects</span>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" aria-label="Notifications" onclick="window.location.href='404.html'">
+          <svg class="ic" aria-hidden="true"><use href="#ic-bell"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="header-avatar" id="headerAvatar">?</div>
+      </div>
+    </header>
+
+    <main class="dash-content">
+      <div class="content-header">
+        <h1>Projects</h1>
+        <p>Track progress across all active and completed consulting engagements.</p>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stats-grid" style="margin-bottom:1.5rem">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon teal"><svg class="ic ic-lg" aria-hidden="true"><use href="#ic-projects"/></svg></div>
+            <span class="stat-badge badge-up">Total</span>
+          </div>
+          <div class="stat-value">16</div><div class="stat-label">All Projects</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.08s">
+          <div class="stat-card-header">
+            <div class="stat-icon navy"><svg class="ic ic-lg" aria-hidden="true"><use href="#ic-activity"/></svg></div>
+            <span class="stat-badge badge-up">Active</span>
+          </div>
+          <div class="stat-value">9</div><div class="stat-label">In Progress</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.16s">
+          <div class="stat-card-header">
+            <div class="stat-icon green"><svg class="ic ic-lg" aria-hidden="true"><use href="#ic-check-circle"/></svg></div>
+            <span class="stat-badge badge-up">Done</span>
+          </div>
+          <div class="stat-value">5</div><div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.24s">
+          <div class="stat-card-header">
+            <div class="stat-icon orange"><svg class="ic ic-lg" aria-hidden="true"><use href="#ic-calendar"/></svg></div>
+            <span class="stat-badge badge-down">Soon</span>
+          </div>
+          <div class="stat-value">3</div><div class="stat-label">Due This Week</div>
+        </div>
+      </div>
+
+      <!-- Project List -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <h3>All Projects <span class="count-pill" id="projCount">9</span></h3>
+        </div>
+        <div class="section-card-body">
+          <div class="toolbar">
+            <div class="search-box">
+              <svg class="s-icon ic-sm" aria-hidden="true" style="position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:var(--text-muted)"><use href="#ic-search"/></svg>
+              <input type="text" id="searchInput" placeholder="Search by title or client…" autocomplete="off">
+            </div>
+            <select class="flt-sel" id="statusFilter">
+              <option value="">All Status</option>
+              <option value="inprogress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+              <option value="onhold">On Hold</option>
+            </select>
+            <button class="btn-add" onclick="alert('Connect a backend to create projects.')">
+              <svg class="ic ic-sm" aria-hidden="true"><use href="#ic-plus"/></svg>New Project
+            </button>
+          </div>
+          <div class="proj-list" id="projList"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+  const session = requireAuth();
+  if (session) {
+    document.getElementById('sidebarAvatar').textContent = session.avatar;
+    document.getElementById('headerAvatar').textContent  = session.avatar;
+    document.getElementById('sidebarName').textContent   = session.name;
+    document.getElementById('sidebarRole').textContent   = session.role === 'admin' ? 'Administrator' : 'Consultant';
+    document.getElementById('navBack').href = getDashboardUrl(session.role);
+  }
+
+  const PROJECTS = [
+    { id:1, title:'Digital Transformation Strategy',   client:'TechVentures Inc.',     status:'inprogress', progress:68,  budget:'$45K', due:'Jun 15, 2025', team:['SJ','MC','AR'] },
+    { id:2, title:'Market Expansion Analysis',          client:'Green Growth Co.',       status:'completed',  progress:100, budget:'$22K', due:'Apr 30, 2025', team:['DK','PP'] },
+    { id:3, title:'Financial Risk Assessment',          client:'FinEdge Solutions',      status:'inprogress', progress:42,  budget:'$60K', due:'Jul 20, 2025', team:['JW','AN'] },
+    { id:4, title:'Healthcare Process Optimisation',   client:'Nova Healthcare',        status:'inprogress', progress:80,  budget:'$80K', due:'May 31, 2025', team:['TE','LM'] },
+    { id:5, title:'Supply Chain Restructuring',         client:'Atlas Retail Brands',   status:'pending',    progress:0,   budget:'$35K', due:'Aug 1, 2025',  team:['SJ','RO'] },
+    { id:6, title:'Logistics Network Audit',            client:'PanAfrica Logistics',   status:'inprogress', progress:55,  budget:'$90K', due:'Jun 30, 2025', team:['MC','DK'] },
+    { id:7, title:'Brand Identity Refresh',             client:'Creative Studio MX',    status:'completed',  progress:100, budget:'$18K', due:'Mar 15, 2025', team:['PP','JW'] },
+    { id:8, title:'Operations Efficiency Study',        client:'Nordic Ops AB',         status:'onhold',     progress:30,  budget:'$28K', due:'TBD',          team:['AN','TE'] },
+    { id:9, title:'Retail Customer Journey Mapping',   client:'Atlas Retail Brands',   status:'inprogress', progress:15,  budget:'$40K', due:'Sep 5, 2025',  team:['LM','SJ'] },
+  ];
+
+  const STATUS_LABEL = { inprogress:'In Progress', completed:'Completed', pending:'Pending', onhold:'On Hold' };
+
+  // SVG snippets re-used from sprite
+  const IC = {
+    briefcase: `<svg class="ic ic-sm" aria-hidden="true"><use href="#ic-briefcase"/></svg>`,
+    dollar:    `<svg class="ic ic-sm" aria-hidden="true"><use href="#ic-dollar"/></svg>`,
+    calendar:  `<svg class="ic ic-sm" aria-hidden="true"><use href="#ic-calendar"/></svg>`,
+    users:     `<svg class="ic ic-sm" aria-hidden="true"><use href="#ic-users"/></svg>`,
+  };
+
+  function render(list) {
+    const el = document.getElementById('projList');
+    document.getElementById('projCount').textContent = list.length;
+    if (!list.length) {
+      el.innerHTML = `<div class="empty-state">
+        <svg width="48" height="48" class="ic" style="width:48px;height:48px;opacity:.25" aria-hidden="true"><use href="#ic-projects"/></svg>
+        <p>No projects match your search.</p>
+      </div>`;
+      return;
+    }
+    el.innerHTML = list.map(p => `
+      <div class="pj">
+        <div class="pj-stripe ${p.status}"></div>
+        <div class="pj-body">
+          <div class="pj-top">
+            <div>
+              <div class="pj-title">${p.title}</div>
+              <div class="pj-client">${IC.briefcase} ${p.client}</div>
+            </div>
+            <span class="pill ${p.status}">${STATUS_LABEL[p.status]}</span>
+          </div>
+          <div class="pj-meta">
+            <span class="pj-meta-item">${IC.dollar} ${p.budget}</span>
+            <span class="pj-meta-item">${IC.calendar} Due ${p.due}</span>
+            <span class="pj-meta-item">${IC.users}
+              <span class="team-stack">
+                ${p.team.map(t => `<div class="t-av">${t}</div>`).join('')}
+              </span>
+            </span>
+          </div>
+          <div>
+            <div class="pj-progress-label"><span>Progress</span><span>${p.progress}%</span></div>
+            <div class="pj-bar-bg"><div class="pj-bar-fill ${p.status}" style="width:${p.progress}%"></div></div>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function applyFilter() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const s = document.getElementById('statusFilter').value;
+    render(PROJECTS.filter(p =>
+      (!q || p.title.toLowerCase().includes(q) || p.client.toLowerCase().includes(q)) &&
+      (!s || p.status === s)
+    ));
+  }
+
+  document.getElementById('searchInput').addEventListener('input', applyFilter);
+  document.getElementById('statusFilter').addEventListener('change', applyFilter);
+  render(PROJECTS);
+
+  const sb = document.getElementById('sidebar'), ov = document.getElementById('overlay');
+  document.getElementById('hamburger').addEventListener('click', () => { sb.classList.add('open'); ov.classList.add('show'); });
+  document.getElementById('sidebarClose').addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('show'); });
+  ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('show'); });
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+</script>
+</body>
+</html>

@@ -31,11 +31,28 @@ function getDashboardUrl(role) {
 // ── Auth functions ────────────────────────────────────────
 function login(email, password, role) {
   if (!email || !password || !role) return { success: false, message: 'All fields are required.' };
-  const user = getUsers().find(
-    u => u.email.toLowerCase() === email.toLowerCase() && u.password === password && u.role === role
-  );
-  if (user) { setSession(user); return { success: true, user }; }
-  return { success: false, message: 'Invalid credentials or role. Please try again.' };
+
+  // Check if user already exists with matching password + role
+  const users = getUsers();
+  let user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password && u.role === role);
+
+  // No backend — accept any valid credentials; auto-create guest session
+  if (!user) {
+    // If email exists but wrong password/role, reject
+    const existingEmail = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (existingEmail && existingEmail.password !== password) {
+      return { success: false, message: 'Incorrect password for this account.' };
+    }
+    // Otherwise auto-register them with this role
+    const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    user = { id: Date.now(), name, email: email.toLowerCase(), password, role, avatar: initials, createdAt: new Date().toISOString() };
+    users.push(user);
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  }
+
+  setSession(user);
+  return { success: true, user };
 }
 
 function signup(name, email, password, confirm, role) {
