@@ -9,19 +9,19 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .form-group {
-      margin-bottom: 0.05rem;
+      margin-bottom: 0.3rem;
     }
 
     .form-header {
-      margin-bottom: 1.1rem;
+      margin-bottom: 0.5rem;
     }
 
     .divider {
-      margin: 0.875rem 0;
+      margin: 0.35rem 0;
     }
 
     .auth-switch {
-      margin-top: 0.875rem;
+      margin-top: 0.35rem;
     }
 
     .brand-panel {
@@ -64,19 +64,19 @@
     .brand-features {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 2rem;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
       width: 100%;
     }
 
     .feat-card {
       display: flex;
       align-items: center;
-      gap: 0.875rem;
+      gap: 0.75rem;
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.875rem;
-      padding: 0.875rem 1rem;
+      border-radius: 0.75rem;
+      padding: 0.625rem 0.875rem;
       backdrop-filter: blur(8px);
       animation: slideInLeft 0.5s ease both;
     }
@@ -271,32 +271,18 @@
       background: #fff;
       border-radius: 1.25rem;
       box-shadow: 0 8px 40px rgba(15, 38, 69, 0.1), 0 2px 8px rgba(15, 38, 69, 0.06);
-      /* Card is static — only inner content scrolls */
-      max-height: 88vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
     }
     .form-card-body {
-      overflow-y: auto;
-      flex: 1;
-      padding: 0 1.75rem 1.75rem;
-      /* Custom subtle scrollbar */
-      scrollbar-width: thin;
-      scrollbar-color: rgba(91,191,170,0.4) transparent;
+      padding: 0 1.1rem 1rem;
     }
-    .form-card-body::-webkit-scrollbar { width: 5px; }
-    .form-card-body::-webkit-scrollbar-track { background: transparent; }
-    .form-card-body::-webkit-scrollbar-thumb { background: rgba(91,191,170,0.4); border-radius: 99px; }
     .form-card-header-area {
-      padding: 1.75rem 1.75rem 0;
-      flex-shrink: 0;
+      padding: 1rem 1.1rem 0;
     }
 
     @media(min-width:768px) {
       .form-card { border-radius: 1.5rem; }
-      .form-card-header-area { padding: 2rem 2rem 0; }
-      .form-card-body { padding: 0 2rem 2rem; }
+      .form-card-header-area { padding: 1.25rem 1.5rem 0; }
+      .form-card-body { padding: 0 1.5rem 1.25rem; }
       .form-panel { padding: 0; }
       .fp-chip { display: flex; align-items: center; gap: 0.4rem; }
     }

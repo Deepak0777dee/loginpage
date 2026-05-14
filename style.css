@@ -170,7 +170,7 @@ textarea {
 
 .form-header {
   text-align: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: 0.875rem;
 }
 
 .form-logo {
@@ -194,7 +194,7 @@ textarea {
 
 /* ── Form Groups ───────────────────────────────────── */
 .form-group {
-  margin-bottom: 1.125rem;
+  margin-bottom: 0.4rem;
   position: relative;
 }
 
@@ -209,12 +209,12 @@ textarea {
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.875rem;
   border: 1.5px solid var(--secondary-dark);
   border-radius: var(--radius-md);
   background: var(--white);
   color: var(--text-primary);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   transition: var(--t);
   outline: none;
 }
@@ -284,10 +284,10 @@ textarea {
 /* Error messages */
 .error-msg {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--error);
-  margin-top: 0.3rem;
-  min-height: 1rem;
+  margin-top: 0.15rem;
+  min-height: 0;
   animation: fadeIn 0.2s ease;
 }
 
@@ -295,7 +295,7 @@ textarea {
 .strength-bar {
   display: flex;
   gap: 4px;
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .strength-bar span {
@@ -358,12 +358,12 @@ textarea {
 /* ── Primary Button ────────────────────────────────── */
 .btn-primary {
   width: 100%;
-  padding: 0.875rem;
+  padding: 0.65rem;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: var(--white);
   border: none;
   border-radius: var(--radius-md);
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   font-family: var(--font-display);
   cursor: pointer;
@@ -447,11 +447,11 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   border: 1.5px solid var(--secondary-dark);
   border-radius: var(--radius-md);
   background: var(--white);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
@@ -654,9 +654,8 @@ textarea {
     width: 55%;
     justify-content: center;
     border-radius: 0;
-    padding: 3rem 2.5rem;
+    padding: 2rem 2rem;
     min-height: 100vh;
-    overflow-y: auto;
   }
 
   .form-logo {
