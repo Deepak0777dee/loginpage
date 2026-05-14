@@ -16,8 +16,8 @@ function initUsers() {
 }
 
 // ── Helpers ───────────────────────────────────────────────
-function getUsers()  { try { return JSON.parse(localStorage.getItem(USERS_KEY)  || '[]');   } catch { return []; }  }
-function getSession(){ try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { return null; } }
+function getUsers()   { try { return JSON.parse(localStorage.getItem(USERS_KEY)  || '[]');   } catch { return []; }  }
+function getSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { return null; } }
 function setSession(user) { localStorage.setItem(SESSION_KEY, JSON.stringify(user)); }
 function clearSession()   { localStorage.removeItem(SESSION_KEY); }
 
@@ -32,24 +32,15 @@ function getDashboardUrl(role) {
 function login(email, password, role) {
   if (!email || !password || !role) return { success: false, message: 'All fields are required.' };
 
-  // Check if user already exists with matching password + role
-  const users = getUsers();
-  let user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password && u.role === role);
+  // No backend — accept ANY credentials and log in immediately.
+  // Derive a display name from the email prefix.
+  const name     = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const user     = { id: Date.now(), name, email: email.toLowerCase(), password, role, avatar: initials, createdAt: new Date().toISOString() };
 
-  // No backend — accept any valid credentials; auto-create guest session
-  if (!user) {
-    // If email exists but wrong password/role, reject
-    const existingEmail = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (existingEmail && existingEmail.password !== password) {
-      return { success: false, message: 'Incorrect password for this account.' };
-    }
-    // Otherwise auto-register them with this role
-    const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-    user = { id: Date.now(), name, email: email.toLowerCase(), password, role, avatar: initials, createdAt: new Date().toISOString() };
-    users.push(user);
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
+  // Upsert: keep all other users, overwrite this email entry
+  const others = getUsers().filter(u => u.email.toLowerCase() !== email.toLowerCase());
+  localStorage.setItem(USERS_KEY, JSON.stringify([...others, user]));
 
   setSession(user);
   return { success: true, user };
@@ -61,14 +52,10 @@ function signup(name, email, password, confirm, role) {
   if (!validatePassword(password)) return { success: false, message: 'Password must be at least 8 characters.' };
   if (password !== confirm)        return { success: false, message: 'Passwords do not match.' };
 
-  const users = getUsers();
-  if (users.find(u => u.email.toLowerCase() === email.toLowerCase()))
-    return { success: false, message: 'An account with this email already exists.' };
-
   const initials = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   const newUser  = { id: Date.now(), name: name.trim(), email: email.trim().toLowerCase(), password, role, avatar: initials, createdAt: new Date().toISOString() };
-  users.push(newUser);
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  const others   = getUsers().filter(u => u.email.toLowerCase() !== email.trim().toLowerCase());
+  localStorage.setItem(USERS_KEY, JSON.stringify([...others, newUser]));
   setSession(newUser);
   return { success: true, user: newUser };
 }
