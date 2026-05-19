@@ -1,622 +1,483 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sign in to Stackly Business Consulting — your intelligent consulting platform.">
-  <title>Stackly — Sign In</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* ── Reduced form spacing ─────────────────────── */
-    .form-group {
-      margin-bottom: 0.75rem;
-    }
-
-    .form-header {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-forgot {
-      margin-bottom: 0.875rem;
-    }
-
-    .divider {
-      margin: 1rem 0;
-    }
-
-    .auth-switch {
-      margin-top: 1rem;
-    }
-
-    /* ── Brand Panel Visual Enhancements ─────────── */
-    .brand-panel {
-      background: linear-gradient(160deg, #0F2645 0%, #132f56 60%, #0e2440 100%);
-      overflow: hidden;
-    }
-
-    /* ── Form Panel Rich Background ──────────────── */
-    .form-panel {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(145deg, #E8F0FE 0%, #EEF4FF 40%, #F0F8F6 100%) !important;
-    }
-
-    /* Dot grid overlay */
-    .form-panel::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(91, 191, 170, 0.18) 1.5px, transparent 1.5px);
-      background-size: 28px 28px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Large glowing teal orb — top right */
-    .form-panel::after {
-      content: '';
-      position: absolute;
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, rgba(91, 191, 170, 0.13) 0%, transparent 70%);
-      top: -120px;
-      right: -120px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Extra decorative orbs via injected divs */
-    .fp-orb-bl {
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(15, 38, 69, 0.06) 0%, transparent 70%);
-      bottom: -80px;
-      left: -80px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .fp-orb-center {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(91, 191, 170, 0.07) 0%, transparent 70%);
-      top: 50%;
-      left: 15%;
-      transform: translateY(-50%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Arc / wave shape behind the card */
-    .fp-arc {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      border: 2px solid rgba(91, 191, 170, 0.12);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .fp-arc-2 {
-      position: absolute;
-      width: 420px;
-      height: 420px;
-      border: 1.5px solid rgba(91, 191, 170, 0.08);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Floating accent chip top-left */
-    .fp-chip {
-      position: absolute;
-      top: 1.5rem;
-      left: 1.5rem;
-      display: none;
-      background: rgba(91, 191, 170, 0.12);
-      border: 1px solid rgba(91, 191, 170, 0.25);
-      border-radius: 99px;
-      padding: 0.4rem 1rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #3DA090;
-      pointer-events: none;
-      z-index: 1;
-      animation: fadeIn 0.8s ease both;
-    }
-
-    /* Bottom decorative bar */
-    .fp-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, rgba(91, 191, 170, 0.4), transparent);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Ensure card sits above decorations */
-    .form-card {
-      position: relative;
-      z-index: 2;
-    }
-
-    @media (min-width: 768px) {
-      .fp-chip {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-    }
-
-    /* Floating feature cards */
-    .brand-features {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 2rem;
-      width: 100%;
-    }
-
-    .feat-card {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.875rem;
-      padding: 0.875rem 1rem;
-      backdrop-filter: blur(8px);
-      animation: slideInLeft 0.5s ease both;
-    }
-
-    .feat-card:nth-child(1) {
-      animation-delay: 0.1s;
-    }
-
-    .feat-card:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .feat-card:nth-child(3) {
-      animation-delay: 0.3s;
-    }
-
-    .feat-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 0.625rem;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.125rem;
-    }
-
-    .feat-icon.teal {
-      background: rgba(91, 191, 170, 0.2);
-    }
-
-    .feat-icon.blue {
-      background: rgba(59, 130, 246, 0.2);
-    }
-
-    .feat-icon.amber {
-      background: rgba(245, 158, 11, 0.2);
-    }
-
-    .feat-text p {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .feat-text span {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.55);
-    }
-
-    /* Decorative grid pattern */
-    .brand-grid {
-      position: absolute;
-      inset: 0;
-      opacity: 0.035;
-      background-image: linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-    }
-
-    /* Glowing orb */
-    .brand-orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(60px);
-    }
-
-    .orb-1 {
-      width: 280px;
-      height: 280px;
-      background: rgba(91, 191, 170, 0.18);
-      top: -60px;
-      right: -60px;
-    }
-
-    .orb-2 {
-      width: 200px;
-      height: 200px;
-      background: rgba(91, 191, 170, 0.1);
-      bottom: 80px;
-      left: -80px;
-    }
-
-    /* Floating badge (desktop only) */
-    .brand-badge {
-      display: none;
-      position: absolute;
-      bottom: 2.5rem;
-      right: 2rem;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(91, 191, 170, 0.3);
-      border-radius: 0.875rem;
-      padding: 0.75rem 1rem;
-      backdrop-filter: blur(10px);
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .brand-badge p {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--accent-light);
-    }
-
-    .brand-badge span {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    /* Hide features on mobile, show on desktop in brand-panel */
-    @media (max-width: 767px) {
-      .brand-features {
-        display: none;
-      }
-
-      .brand-panel {
-        padding-bottom: 1.5rem;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .brand-badge {
-        display: block;
-      }
-
-      .brand-panel::before,
-      .brand-panel::after {
-        display: none;
-      }
-    }
-
-    @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    /* ── Form card glass effect ───────────────────── */
-    /* form-panel background handled above with ::before / ::after */
-    .form-card {
-      background: #fff;
-      border-radius: 1.25rem;
-      box-shadow: 0 8px 40px rgba(15, 38, 69, 0.1), 0 2px 8px rgba(15, 38, 69, 0.06);
-      padding: 2rem 1.75rem;
-    }
-
-    @media (min-width: 768px) {
-      .form-card {
-        border-radius: 1.5rem;
-        padding: 2.25rem 2rem;
-      }
-
-      .form-panel {
-        padding: 0;
-      }
-    }
-
-    /* ── Role select icon prefix ─────────────────── */
-    .select-wrap {
-      position: relative;
-    }
-
-    .select-wrap .select-icon {
-      position: absolute;
-      left: 0.875rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1rem;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .select-wrap select {
-      padding-left: 2.5rem;
-    }
-  </style>
+  <meta name="description" content="LexCore Law — Expert legal representation in criminal defense, corporate law, family law, real estate, immigration, and civil litigation. Justice. Precision. Results.">
+  <title>LexCore Law — Justice. Precision. Results.</title>
+  <link rel="stylesheet" href="home.css">
 </head>
+<body>
 
-<body class="auth-page">
+<!-- ── NAVBAR ── -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">L</div>
+    <span class="nav-logo-text">Lex<span>Core</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#practice">Practice Areas</a>
+    <a href="#about">About Us</a>
+    <a href="#team">Our Team</a>
+    <a href="#blog">Insights</a>
+    <a href="#contact">Contact</a>
+    <a href="login.html" class="nav-cta">Client Portal →</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <!-- ── Brand Panel ─────────────────────────────── -->
-  <div class="brand-panel">
-    <div class="brand-grid"></div>
-    <div class="brand-orb orb-1"></div>
-    <div class="brand-orb orb-2"></div>
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#practice">Practice Areas</a>
+  <a href="#about">About Us</a>
+  <a href="#team">Our Team</a>
+  <a href="#blog">Insights</a>
+  <a href="#contact">Contact</a>
+  <a href="login.html" class="nav-cta">Client Portal →</a>
+</div>
 
-    <img src="assets/logo.png" alt="Stackly" class="brand-logo">
-    <h1 class="brand-tagline">Empowering Businesses<br>Through Smart Consulting</h1>
-    <p class="brand-sub">Join thousands of consultants and admins who trust Stackly to deliver measurable results.</p>
-
-    <!-- Stats (desktop) -->
-    <div class="brand-stats">
-      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Clients</span></div>
-      <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Success Rate</span></div>
-      <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Years</span></div>
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">⚖️ &nbsp;Trusted Legal Excellence Since 2002</div>
+      <h1 class="hero-title">Your Rights,<br>Our <span>Relentless</span><br>Commitment</h1>
+      <p class="hero-desc">LexCore Law delivers precision-driven legal representation across criminal, corporate, family, and civil matters. We fight for what's rightfully yours — every step of the way.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-gold">Free Consultation ↗</a>
+        <a href="#practice" class="btn-outline">Our Practice Areas</a>
+      </div>
     </div>
-
-    <!-- Feature Cards (desktop) -->
-    <div class="brand-features">
-      <div class="feat-card">
-        <div class="feat-icon teal">📊</div>
-        <div class="feat-text">
-          <p>Real-Time Analytics</p>
-          <span>Track every project metric live</span>
-        </div>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img src="assets/hero.webp" alt="LexCore Law Firm - Courthouse Interior" loading="eager">
       </div>
-      <div class="feat-card">
-        <div class="feat-icon blue">🛡️</div>
-        <div class="feat-text">
-          <p>Role-Based Access</p>
-          <span>Secure, permission-based dashboards</span>
-        </div>
+      <div class="hero-float-card hfc-1">
+        <div class="hfc-num">98%</div>
+        <div class="hfc-label">Case Success Rate</div>
       </div>
-      <div class="feat-card">
-        <div class="feat-icon amber">⚡</div>
-        <div class="feat-text">
-          <p>Instant Collaboration</p>
-          <span>Connect teams across all projects</span>
-        </div>
+      <div class="hero-float-card hfc-2">
+        <div class="hfc-num">5K+</div>
+        <div class="hfc-label">Cases Resolved</div>
       </div>
-    </div>
-
-    <!-- Floating badge -->
-    <div class="brand-badge">
-      <p>⭐ 4.9 / 5 rating</p>
-      <span>from 1,200+ users</span>
     </div>
   </div>
+</section>
 
-  <!-- ── Form Panel ────────────────────────────────── -->
-  <div class="form-panel">
-    <!-- Decorative background elements -->
-    <div class="fp-orb-bl"></div>
-    <div class="fp-orb-center"></div>
-    <div class="fp-arc"></div>
-    <div class="fp-arc-2"></div>
-
-    <div class="fp-bar"></div>
-    <div class="form-card">
-      <div class="form-header">
-        <img src="assets/logo.png" alt="Stackly" class="form-logo">
-        <h2>Welcome Back</h2>
-        <p>Sign in to continue to your dashboard</p>
-      </div>
-
-      <!-- Alert Banner -->
-      <div class="alert" id="alertBanner"></div>
-
-      <!-- Login Form -->
-      <form id="loginForm" novalidate>
-
-        <!-- Role Select -->
-        <div class="form-group" id="grpRole">
-          <label for="role">I am a</label>
-          <div class="select-wrap">
-            <span class="select-icon">👤</span>
-            <select id="role" name="role">
-              <option value="">Select your role…</option>
-              <option value="consultant">💼 Consultant</option>
-              <option value="admin">🛡️ Admin</option>
-            </select>
-          </div>
-          <span class="error-msg" id="roleError"></span>
-        </div>
-
-        <!-- Email -->
-        <div class="form-group" id="grpEmail">
-          <label for="email">Email Address</label>
-          <input type="text" id="email" name="email" placeholder="you@company" autocomplete="email">
-          <span class="error-msg" id="emailError"></span>
-        </div>
-
-        <!-- Password -->
-        <div class="form-group" id="grpPassword">
-          <label for="password">Password</label>
-          <div class="pw-wrap">
-            <input type="password" id="password" name="password" placeholder="Enter your password"
-              autocomplete="current-password">
-            <button type="button" class="toggle-pw" id="togglePw" aria-label="Toggle password visibility">
-              <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </button>
-          </div>
-          <span class="error-msg" id="passwordError"></span>
-        </div>
-
-        <div class="form-forgot">
-          <a href="404.html" class="link-accent">Forgot Password?</a>
-        </div>
-
-        <button type="submit" class="btn-primary" id="loginBtn">
-          <span id="loginBtnText">Sign In</span>
-          <div class="btn-loader hidden" id="loginLoader"></div>
-        </button>
-      </form>
-
-      <div class="divider"><span>or continue with</span></div>
-
-      <!-- SSO Buttons -->
-      <div class="sso-group">
-        <a href="404.html" class="sso-btn" id="googleBtn">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <path
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              fill="#4285F4" />
-            <path
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              fill="#34A853" />
-            <path
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
-              fill="#FBBC05" />
-            <path
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              fill="#EA4335" />
-          </svg>
-          Google
-        </a>
-        <a href="404.html" class="sso-btn" id="facebookBtn">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <path
-              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-              fill="#1877F2" />
-          </svg>
-          Facebook
-        </a>
-      </div>
-
-      <p class="auth-switch">Don't have an account? <a href="signup.html" class="link-accent">Sign Up</a></p>
-
+<!-- ── STATS BAR ── -->
+<section class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item reveal delay-1">
+      <span class="stat-num" data-target="5000" data-suffix="+">5000+</span>
+      <span class="stat-label">Cases Resolved</span>
+    </div>
+    <div class="stat-item reveal delay-2">
+      <span class="stat-num" data-target="98" data-suffix="%">98%</span>
+      <span class="stat-label">Success Rate</span>
+    </div>
+    <div class="stat-item reveal delay-3">
+      <span class="stat-num" data-target="22" data-suffix="+ Yrs">22+ Yrs</span>
+      <span class="stat-label">Legal Experience</span>
+    </div>
+    <div class="stat-item reveal delay-4">
+      <span class="stat-num" data-target="12" data-suffix="">12</span>
+      <span class="stat-label">Practice Areas</span>
     </div>
   </div>
+</section>
 
-  <script src="auth.js"></script>
-  <script>
-    redirectIfLoggedIn();
+<!-- ── PRACTICE AREAS ── -->
+<section class="section" id="practice">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">What We Practice</div>
+      <h2 class="section-title reveal delay-1">Comprehensive <span>Legal Services</span></h2>
+      <p class="section-sub reveal delay-2">Our attorneys bring deep expertise across every major practice area, ensuring you receive the best legal counsel tailored to your unique situation.</p>
+    </div>
+    <div class="practice-grid">
+      <div class="practice-card reveal delay-1">
+        <div class="pc-icon">⚖️</div>
+        <h3 class="pc-title">Criminal Defense</h3>
+        <p class="pc-desc">Aggressive representation for individuals facing criminal charges. We protect your rights at every stage of the legal process.</p>
+        <a href="#contact" class="pc-link">Learn More →</a>
+      </div>
+      <div class="practice-card reveal delay-2">
+        <div class="pc-icon">🏢</div>
+        <h3 class="pc-title">Corporate Law</h3>
+        <p class="pc-desc">Strategic legal counsel for businesses — from formation and contracts to mergers, acquisitions, and dispute resolution.</p>
+        <a href="#contact" class="pc-link">Learn More →</a>
+      </div>
+      <div class="practice-card reveal delay-3">
+        <div class="pc-icon">👨‍👩‍👧</div>
+        <h3 class="pc-title">Family Law</h3>
+        <p class="pc-desc">Compassionate representation for divorce, child custody, adoption, and all family-related legal matters.</p>
+        <a href="#contact" class="pc-link">Learn More →</a>
+      </div>
+      <div class="practice-card reveal delay-1">
+        <div class="pc-icon">🏠</div>
+        <h3 class="pc-title">Real Estate Law</h3>
+        <p class="pc-desc">Expert guidance in property transactions, landlord-tenant disputes, zoning, and real estate litigation.</p>
+        <a href="#contact" class="pc-link">Learn More →</a>
+      </div>
+      <div class="practice-card reveal delay-2">
+        <div class="pc-icon">🌐</div>
+        <h3 class="pc-title">Immigration Law</h3>
+        <p class="pc-desc">Navigating complex immigration processes — visas, green cards, citizenship, and deportation defense.</p>
+        <a href="#contact" class="pc-link">Learn More →</a>
+      </div>
+      <div class="practice-card reveal delay-3">
+        <div class="pc-icon">📋</div>
+        <h3 class="pc-title">Civil Litigation</h3>
+        <p class="pc-desc">Skilled trial attorneys handling personal injury, breach of contract, and complex civil disputes from discovery to verdict.</p>
+        <a href="#contact" class="pc-link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    const form = document.getElementById('loginForm');
-    const roleEl = document.getElementById('role');
-    const emailEl = document.getElementById('email');
-    const passwordEl = document.getElementById('password');
-    const loginBtn = document.getElementById('loginBtn');
-    const loginText = document.getElementById('loginBtnText');
-    const loginLoader = document.getElementById('loginLoader');
-    const alertBanner = document.getElementById('alertBanner');
+<!-- ── ABOUT ── -->
+<section class="section" id="about" style="background:#fff;">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <img src="assets/about.webp" alt="LexCore Law Office Interior" loading="lazy">
+        <div class="about-img-badge">
+          <span class="ab-num">22+</span>
+          <span class="ab-label">Years of<br>Excellence</span>
+        </div>
+      </div>
+      <div class="about-text reveal-right">
+        <div class="section-tag">About LexCore Law</div>
+        <h2 class="section-title">A Legacy of <span>Legal Excellence</span></h2>
+        <p class="section-sub">Founded in 2002, LexCore Law has grown into one of the region's most respected law firms. Our attorneys combine deep legal expertise with a client-first philosophy — delivering results that matter most.</p>
+        <ul class="about-list">
+          <li>Award-winning litigation team with over 5,000 cases resolved</li>
+          <li>Certified specialists in 12 distinct areas of law</li>
+          <li>AV Preeminent® rated by Martindale-Hubbell for ethics and ability</li>
+          <li>Transparent, flat-fee consultations with no hidden costs</li>
+          <li>24/7 client support and real-time case tracking portal</li>
+        </ul>
+        <a href="#contact" class="btn-gold" style="display:inline-flex;">Schedule a Consultation →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ── Password toggle ───────────────────────────────
-    document.getElementById('togglePw').addEventListener('click', () => {
-      const isText = passwordEl.type === 'text';
-      passwordEl.type = isText ? 'password' : 'text';
-      document.getElementById('eyeIcon').innerHTML = isText
-        ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
-        : '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
-    });
+<!-- ── TEAM ── -->
+<section class="section section-dark" id="team" style="background:var(--navy);">
+  <div class="section-inner">
+    <div class="section-header center section-dark">
+      <div class="section-tag reveal">Meet The Team</div>
+      <h2 class="section-title reveal delay-1">Our <span>Lead Attorneys</span></h2>
+      <p class="section-sub reveal delay-2">Seasoned legal professionals dedicated to your success, backed by decades of courtroom experience and academic excellence.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal delay-1">
+        <img src="assets/attorney-1.webp" alt="James Harrington — Senior Partner" class="team-img" loading="lazy">
+        <div class="team-info">
+          <h3 class="team-name">James Harrington</h3>
+          <div class="team-role">Senior Partner — Criminal Defense</div>
+          <p class="team-bio">Harvard Law graduate with 24 years of trial experience. James has successfully defended 600+ criminal cases and is consistently ranked among the top trial lawyers in the state.</p>
+          <div class="team-socials">
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="Email">✉</a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal delay-2">
+        <img src="assets/attorney-2.webp" alt="Sophia Patel — Corporate Law Partner" class="team-img" loading="lazy">
+        <div class="team-info">
+          <h3 class="team-name">Sophia Patel</h3>
+          <div class="team-role">Partner — Corporate & Business Law</div>
+          <p class="team-bio">Yale Law alumna with expertise in M&A, contracts, and corporate governance. Sophia has advised Fortune 500 companies and startups alike through transformative transactions.</p>
+          <div class="team-socials">
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="Email">✉</a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal delay-3">
+        <img src="assets/attorney-3.webp" alt="Marcus Webb — Civil Litigation Partner" class="team-img" loading="lazy">
+        <div class="team-info">
+          <h3 class="team-name">Marcus Webb</h3>
+          <div class="team-role">Partner — Civil Litigation & Real Estate</div>
+          <p class="team-bio">Columbia Law scholar with a proven track record in complex civil litigation. Marcus's strategic approach has secured landmark verdicts in multi-million dollar cases.</p>
+          <div class="team-socials">
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="Email">✉</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ── Alert helpers ─────────────────────────────────
-    function showAlert(msg, type = 'error') { alertBanner.textContent = msg; alertBanner.className = `alert ${type} show`; }
-    function hideAlert() { alertBanner.className = 'alert'; }
+<!-- ── TESTIMONIALS ── -->
+<section class="section section-dark" style="background:var(--navy-dark);padding-top:0;">
+  <div class="section-inner">
+    <div class="section-header center section-dark">
+      <div class="section-tag reveal">Client Stories</div>
+      <h2 class="section-title reveal delay-1">What Our <span>Clients Say</span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"LexCore Law turned a hopeless criminal case into an acquittal. James Harrington's courtroom presence and preparation were unlike anything I've ever witnessed. Forever grateful."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RD</div>
+          <div>
+            <div class="testi-name">Robert Davidson</div>
+            <div class="testi-case">Criminal Defense — Acquitted</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Sophia handled our company's $40M merger flawlessly. Her attention to detail and deep understanding of corporate law made the entire process smooth and secure."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AN</div>
+          <div>
+            <div class="testi-name">Angela Nwachukwu</div>
+            <div class="testi-case">Corporate Merger — CEO, TechBridge Inc.</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"After a difficult divorce, LexCore's family law team ensured full custody was awarded. They were compassionate, professional, and fought tirelessly for my children's future."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">LM</div>
+          <div>
+            <div class="testi-name">Laura Mitchell</div>
+            <div class="testi-case">Family Law — Full Custody Granted</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ── Field error helpers ───────────────────────────
-    function setError(grpId, msgId, msg) { document.getElementById(grpId).classList.add('has-error'); document.getElementById(msgId).textContent = msg; }
-    function clearError(grpId, msgId) { document.getElementById(grpId).classList.remove('has-error'); document.getElementById(msgId).textContent = ''; }
+<!-- ── HOW WE WORK ── -->
+<section class="section" style="background:var(--ivory);">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">Our Process</div>
+      <h2 class="section-title reveal delay-1">How We <span>Deliver Results</span></h2>
+      <p class="section-sub reveal delay-2">A clear, structured approach to every case — from your first call to final resolution.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal delay-1">
+        <div class="ps-num">1</div>
+        <h4 class="ps-title">Free Consultation</h4>
+        <p class="ps-desc">Schedule a no-cost initial meeting with a senior attorney to evaluate your case and legal options.</p>
+      </div>
+      <div class="process-step reveal delay-2">
+        <div class="ps-num">2</div>
+        <h4 class="ps-title">Case Strategy</h4>
+        <p class="ps-desc">We build a tailored legal strategy, conduct research, gather evidence, and prepare your full case file.</p>
+      </div>
+      <div class="process-step reveal delay-3">
+        <div class="ps-num">3</div>
+        <h4 class="ps-title">Aggressive Action</h4>
+        <p class="ps-desc">Our attorneys take decisive legal action — negotiating, filing motions, and representing you in court.</p>
+      </div>
+      <div class="process-step reveal delay-4">
+        <div class="ps-num">4</div>
+        <h4 class="ps-title">Resolution</h4>
+        <p class="ps-desc">We secure the best possible outcome — whether a settlement, acquittal, or court verdict in your favor.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ── Blur validations ──────────────────────────────
-    roleEl.addEventListener('change', () => roleEl.value ? clearError('grpRole', 'roleError') : null);
-    emailEl.addEventListener('blur', () => {
-      if (!emailEl.value) setError('grpEmail', 'emailError', 'Email is required.');
-      else if (!/^[^\s@]+@[^\s@]+$/.test(emailEl.value)) setError('grpEmail', 'emailError', 'Enter a valid email address.');
-      else clearError('grpEmail', 'emailError');
-    });
-    passwordEl.addEventListener('blur', () => {
-      if (!passwordEl.value) setError('grpPassword', 'passwordError', 'Password is required.');
-      else clearError('grpPassword', 'passwordError');
-    });
+<!-- ── BLOG / INSIGHTS ── -->
+<section class="section" id="blog" style="background:#fff;">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">Legal Insights</div>
+      <h2 class="section-title reveal delay-1">From Our <span>Legal Blog</span></h2>
+      <p class="section-sub reveal delay-2">Stay informed with expert commentary on the latest developments in law, rights, and justice.</p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal delay-1">
+        <div class="blog-thumb">📜</div>
+        <div class="blog-body">
+          <span class="blog-cat">Criminal Law</span>
+          <h3 class="blog-title">Understanding Your Miranda Rights: What Every Citizen Must Know</h3>
+          <p class="blog-excerpt">When law enforcement arrests you, certain constitutional rights kick in immediately. Knowing them can make the difference in your case.</p>
+          <div class="blog-meta"><span>May 12, 2026</span><a href="#" class="blog-read">Read More →</a></div>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-2">
+        <div class="blog-thumb">🏢</div>
+        <div class="blog-body">
+          <span class="blog-cat">Corporate Law</span>
+          <h3 class="blog-title">5 Contract Clauses Every Business Owner Should Never Skip</h3>
+          <p class="blog-excerpt">Poorly drafted contracts expose your business to enormous risk. These five clauses are non-negotiable for protecting your interests.</p>
+          <div class="blog-meta"><span>May 5, 2026</span><a href="#" class="blog-read">Read More →</a></div>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-3">
+        <div class="blog-thumb">👨‍👩‍👧</div>
+        <div class="blog-body">
+          <span class="blog-cat">Family Law</span>
+          <h3 class="blog-title">Child Custody in 2026: How Courts Determine "Best Interest"</h3>
+          <p class="blog-excerpt">Family courts weigh multiple factors when determining custody. Understanding the criteria can help you prepare a stronger case.</p>
+          <div class="blog-meta"><span>Apr 28, 2026</span><a href="#" class="blog-read">Read More →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ── Form submit ───────────────────────────────────
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      hideAlert();
-      let valid = true;
+<!-- ── CONTACT ── -->
+<section class="section" id="contact" style="background:var(--ivory);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag reveal">Get In Touch</div>
+      <h2 class="section-title reveal delay-1">Schedule Your <span>Free Consultation</span></h2>
+      <p class="section-sub reveal delay-2">Speak directly with a senior attorney today. No fees, no obligations — just honest legal advice.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <div class="ci-item">
+          <div class="ci-icon">📍</div>
+          <div class="ci-text">
+            <h4>Our Office</h4>
+            <p>1200 Justice Avenue, Suite 800<br>New York, NY 10004</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">📞</div>
+          <div class="ci-text">
+            <h4>Call Us</h4>
+            <p>+1 (800) 539-2673<br>Mon–Fri, 8am – 7pm EST</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">✉️</div>
+          <div class="ci-text">
+            <h4>Email</h4>
+            <p>consult@lexcorelaw.com<br>Response within 2 business hours</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">⏰</div>
+          <div class="ci-text">
+            <h4>Emergency Line</h4>
+            <p>24/7 Criminal Defense Hotline:<br>+1 (800) 539-0911</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal-right">
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="cf-group">
+              <label for="cf-name">Full Name</label>
+              <input type="text" id="cf-name" placeholder="John Smith" required>
+            </div>
+            <div class="cf-group">
+              <label for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" placeholder="you@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="cf-group">
+              <label for="cf-phone">Phone Number</label>
+              <input type="tel" id="cf-phone" placeholder="+1 (555) 000-0000">
+            </div>
+            <div class="cf-group">
+              <label for="cf-area">Practice Area</label>
+              <select id="cf-area">
+                <option value="">Select area of law…</option>
+                <option>Criminal Defense</option>
+                <option>Corporate Law</option>
+                <option>Family Law</option>
+                <option>Real Estate Law</option>
+                <option>Immigration Law</option>
+                <option>Civil Litigation</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="cf-group">
+            <label for="cf-message">Brief Case Description</label>
+            <textarea id="cf-message" placeholder="Briefly describe your legal situation…" required></textarea>
+          </div>
+          <button type="submit" class="btn-gold" style="width:100%;justify-content:center;font-size:1rem;padding:0.9rem;">
+            Send Message &amp; Request Consultation →
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-      const role = roleEl.value;
-      const email = emailEl.value.trim();
-      const password = passwordEl.value;
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:0;">
+          <div class="nav-logo-icon">L</div>
+          <span class="nav-logo-text">Lex<span>Core</span></span>
+        </div>
+        <p>LexCore Law is a premier full-service law firm committed to delivering justice with precision, integrity, and relentless advocacy. Your rights are our mission.</p>
+        <div class="footer-socials" style="margin-top:1.25rem;">
+          <a href="#" title="LinkedIn">in</a>
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="Twitter">𝕏</a>
+          <a href="#" title="Instagram">◎</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Practice Areas</h4>
+        <ul>
+          <li><a href="#practice">Criminal Defense</a></li>
+          <li><a href="#practice">Corporate Law</a></li>
+          <li><a href="#practice">Family Law</a></li>
+          <li><a href="#practice">Real Estate</a></li>
+          <li><a href="#practice">Immigration</a></li>
+          <li><a href="#practice">Civil Litigation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="#blog">Legal Insights</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="login.html">Client Portal</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Attorney Disclaimer</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 LexCore Law LLP. All rights reserved. Attorney advertising. Prior results do not guarantee similar outcomes.</p>
+      <p style="color:rgba(255,255,255,0.3);">AV Preeminent® Rated | Member of American Bar Association</p>
+    </div>
+  </div>
+</footer>
 
-      if (!role) { setError('grpRole', 'roleError', 'Please select your role.'); valid = false; }
-      else clearError('grpRole', 'roleError');
-      if (!email) { setError('grpEmail', 'emailError', 'Email is required.'); valid = false; }
-      else if (!/^[^\s@]+@[^\s@]+$/.test(email)) { setError('grpEmail', 'emailError', 'Enter a valid email.'); valid = false; }
-      else clearError('grpEmail', 'emailError');
-      if (!password) { setError('grpPassword', 'passwordError', 'Password is required.'); valid = false; }
-      else clearError('grpPassword', 'passwordError');
-
-      if (!valid) return;
-
-      loginBtn.disabled = true;
-      loginText.textContent = 'Signing in…';
-      loginLoader.classList.remove('hidden');
-
-      setTimeout(() => {
-        const result = login(email, password, role);
-        loginBtn.disabled = false;
-        loginText.textContent = 'Sign In';
-        loginLoader.classList.add('hidden');
-        if (result.success) {
-          showAlert('Login successful! Redirecting…', 'success');
-          setTimeout(() => { window.location.href = getDashboardUrl(result.user.role); }, 800);
-        } else {
-          showAlert(result.message, 'error');
-        }
-      }, 900);
-    });
-  </script>
-
-  <style>
-    .demo-hint {
-      margin-top: 1rem;
-      padding: 0.625rem 0.875rem;
-      background: rgba(91, 191, 170, 0.07);
-      border: 1px dashed var(--accent);
-      border-radius: var(--radius-md);
-      font-size: 0.72rem;
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: 1.7;
-    }
-  </style>
+<script src="home.js"></script>
 </body>
-
 </html>

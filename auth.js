@@ -1,15 +1,15 @@
 'use strict';
 
-// ── Storage Keys ──────────────────────────────────────────
-const USERS_KEY = 'stackly_users';
-const SESSION_KEY = 'stackly_session';
+// ── Storage Keys ─────────────────────────────────────────
+const USERS_KEY = 'lexcore_users';
+const SESSION_KEY = 'lexcore_session';
 
 // ── Demo seed users ───────────────────────────────────────
 function initUsers() {
   if (!localStorage.getItem(USERS_KEY)) {
     const demo = [
-      { id: 1, name: 'Admin User', email: 'admin@stackly.com', password: 'Admin@123', role: 'admin', avatar: 'AU', createdAt: new Date().toISOString() },
-      { id: 2, name: 'Jane Consultant', email: 'consultant@stackly.com', password: 'Consult@123', role: 'consultant', avatar: 'JC', createdAt: new Date().toISOString() }
+      { id: 1, name: 'Admin User', email: 'admin@lexcorelaw.com', password: 'Admin@123', role: 'admin', avatar: 'AU', createdAt: new Date().toISOString() },
+      { id: 2, name: 'Jane Attorney', email: 'attorney@lexcorelaw.com', password: 'Legal@123', role: 'consultant', avatar: 'JA', createdAt: new Date().toISOString() }
     ];
     localStorage.setItem(USERS_KEY, JSON.stringify(demo));
   }
@@ -60,11 +60,11 @@ function signup(name, email, password, confirm, role) {
   return { success: true, user: newUser };
 }
 
-function logout() { clearSession(); window.location.href = 'index.html'; }
+function logout() { clearSession(); window.location.href = 'login.html'; }
 
 function requireAuth() {
   const s = getSession();
-  if (!s) { window.location.href = 'index.html'; return null; }
+  if (!s) { window.location.href = 'login.html'; return null; }
   return s;
 }
 
