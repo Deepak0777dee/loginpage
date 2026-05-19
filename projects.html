@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Stackly — Projects overview and tracking.">
-  <title>Stackly — Projects</title>
+  <meta name="description" content="Stackly — Matters overview and tracking.">
+  <title>Stackly — Matters</title>
   <link rel="stylesheet" href="dashboard.css">
   <style>
     /* ── Icon system ──────────────────────────────── */
@@ -112,7 +112,7 @@
         <svg class="ic" aria-hidden="true"><use href="#ic-overview"/></svg>Overview
       </a>
       <a class="nav-item active" href="projects.html">
-        <svg class="ic" aria-hidden="true"><use href="#ic-projects"/></svg>Projects
+        <svg class="ic" aria-hidden="true"><use href="#ic-projects"/></svg>Matters
       </a>
       <a class="nav-item" href="reports.html">
         <svg class="ic" aria-hidden="true"><use href="#ic-reports"/></svg>Reports
@@ -133,7 +133,7 @@
     <header class="dash-header">
       <div class="header-left">
         <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-        <span class="page-title">Projects</span>
+        <span class="page-title">Matters</span>
       </div>
       <div class="header-right">
         <button class="notif-btn" aria-label="Notifications" onclick="window.location.href='404.html'">
@@ -146,8 +146,8 @@
 
     <main class="dash-content">
       <div class="content-header">
-        <h1>Projects</h1>
-        <p>Track progress across all active and completed consulting engagements.</p>
+        <h1>Matters</h1>
+        <p>Track progress across all active and completed legal matters.</p>
       </div>
 
       <!-- Stat Cards -->
@@ -157,7 +157,7 @@
             <div class="stat-icon teal"><svg class="ic ic-lg" aria-hidden="true"><use href="#ic-projects"/></svg></div>
             <span class="stat-badge badge-up">Total</span>
           </div>
-          <div class="stat-value">16</div><div class="stat-label">All Projects</div>
+          <div class="stat-value">16</div><div class="stat-label">All Matters</div>
         </div>
         <div class="stat-card" style="animation-delay:.08s">
           <div class="stat-card-header">
@@ -185,7 +185,7 @@
       <!-- Project List -->
       <div class="section-card">
         <div class="section-card-header">
-          <h3>All Projects <span class="count-pill" id="projCount">9</span></h3>
+          <h3>All Matters <span class="count-pill" id="projCount">9</span></h3>
         </div>
         <div class="section-card-body">
           <div class="toolbar">
@@ -200,8 +200,8 @@
               <option value="pending">Pending</option>
               <option value="onhold">On Hold</option>
             </select>
-            <button class="btn-add" onclick="alert('Connect a backend to create projects.')">
-              <svg class="ic ic-sm" aria-hidden="true"><use href="#ic-plus"/></svg>New Project
+            <button class="btn-add" onclick="alert('Connect a backend to create matters.')">
+              <svg class="ic ic-sm" aria-hidden="true"><use href="#ic-plus"/></svg>New Matter
             </button>
           </div>
           <div class="proj-list" id="projList"></div>
@@ -218,20 +218,20 @@
     document.getElementById('sidebarAvatar').textContent = session.avatar;
     document.getElementById('headerAvatar').textContent  = session.avatar;
     document.getElementById('sidebarName').textContent   = session.name;
-    document.getElementById('sidebarRole').textContent   = session.role === 'admin' ? 'Administrator' : 'Consultant';
+    document.getElementById('sidebarRole').textContent   = session.role === 'admin' ? 'Administrator' : 'Attorney';
     document.getElementById('navBack').href = getDashboardUrl(session.role);
   }
 
-  const PROJECTS = [
-    { id:1, title:'Digital Transformation Strategy',   client:'TechVentures Inc.',     status:'inprogress', progress:68,  budget:'$45K', due:'Jun 15, 2025', team:['SJ','MC','AR'] },
-    { id:2, title:'Market Expansion Analysis',          client:'Green Growth Co.',       status:'completed',  progress:100, budget:'$22K', due:'Apr 30, 2025', team:['DK','PP'] },
-    { id:3, title:'Financial Risk Assessment',          client:'FinEdge Solutions',      status:'inprogress', progress:42,  budget:'$60K', due:'Jul 20, 2025', team:['JW','AN'] },
-    { id:4, title:'Healthcare Process Optimisation',   client:'Nova Healthcare',        status:'inprogress', progress:80,  budget:'$80K', due:'May 31, 2025', team:['TE','LM'] },
-    { id:5, title:'Supply Chain Restructuring',         client:'Atlas Retail Brands',   status:'pending',    progress:0,   budget:'$35K', due:'Aug 1, 2025',  team:['SJ','RO'] },
-    { id:6, title:'Logistics Network Audit',            client:'PanAfrica Logistics',   status:'inprogress', progress:55,  budget:'$90K', due:'Jun 30, 2025', team:['MC','DK'] },
-    { id:7, title:'Brand Identity Refresh',             client:'Creative Studio MX',    status:'completed',  progress:100, budget:'$18K', due:'Mar 15, 2025', team:['PP','JW'] },
-    { id:8, title:'Operations Efficiency Study',        client:'Nordic Ops AB',         status:'onhold',     progress:30,  budget:'$28K', due:'TBD',          team:['AN','TE'] },
-    { id:9, title:'Retail Customer Journey Mapping',   client:'Atlas Retail Brands',   status:'inprogress', progress:15,  budget:'$40K', due:'Sep 5, 2025',  team:['LM','SJ'] },
+  const MATTERS = [
+    { id:1, title:'State v. Mitchell (Criminal Defense)', client:'David Mitchell',       status:'inprogress', progress:68,  budget:'$45K', due:'Jun 15, 2025', team:['SJ','MC','AR'] },
+    { id:2, title:'TechVentures M&A Contract',          client:'TechVentures Inc.',      status:'completed',  progress:100, budget:'$22K', due:'Apr 30, 2025', team:['DK','PP'] },
+    { id:3, title:'Mitchell Child Custody Dispute',     client:'Sarah Mitchell',         status:'inprogress', progress:42,  budget:'$60K', due:'Jul 20, 2025', team:['JW','AN'] },
+    { id:4, title:'Nova Healthcare Compliance',         client:'Nova Healthcare',        status:'inprogress', progress:80,  budget:'$80K', due:'May 31, 2025', team:['TE','LM'] },
+    { id:5, title:'Atlas Retail Lease Agreement',       client:'Atlas Retail Brands',    status:'pending',    progress:0,   budget:'$35K', due:'Aug 1, 2025',  team:['SJ','RO'] },
+    { id:6, title:'PanAfrica Logistics IP Protection',  client:'PanAfrica Logistics',    status:'inprogress', progress:55,  budget:'$90K', due:'Jun 30, 2025', team:['MC','DK'] },
+    { id:7, title:'Creative Studio Estate Planning',    client:'Marcus Creative',        status:'completed',  progress:100, budget:'$18K', due:'Mar 15, 2025', team:['PP','JW'] },
+    { id:8, title:'Nordic Ops AB Trademark Violation',  client:'Nordic Ops AB',          status:'onhold',     progress:30,  budget:'$28K', due:'TBD',          team:['AN','TE'] },
+    { id:9, title:'Employment Class Action Defense',    client:'Atlas Retail Brands',    status:'inprogress', progress:15,  budget:'$40K', due:'Sep 5, 2025',  team:['LM','SJ'] },
   ];
 
   const STATUS_LABEL = { inprogress:'In Progress', completed:'Completed', pending:'Pending', onhold:'On Hold' };
@@ -250,7 +250,7 @@
     if (!list.length) {
       el.innerHTML = `<div class="empty-state">
         <svg width="48" height="48" class="ic" style="width:48px;height:48px;opacity:.25" aria-hidden="true"><use href="#ic-projects"/></svg>
-        <p>No projects match your search.</p>
+        <p>No matters match your search.</p>
       </div>`;
       return;
     }
@@ -285,7 +285,7 @@
   function applyFilter() {
     const q = document.getElementById('searchInput').value.toLowerCase();
     const s = document.getElementById('statusFilter').value;
-    render(PROJECTS.filter(p =>
+    render(MATTERS.filter(p =>
       (!q || p.title.toLowerCase().includes(q) || p.client.toLowerCase().includes(q)) &&
       (!s || p.status === s)
     ));
@@ -293,7 +293,7 @@
 
   document.getElementById('searchInput').addEventListener('input', applyFilter);
   document.getElementById('statusFilter').addEventListener('change', applyFilter);
-  render(PROJECTS);
+  render(MATTERS);
 
   const sb = document.getElementById('sidebar'), ov = document.getElementById('overlay');
   document.getElementById('hamburger').addEventListener('click', () => { sb.classList.add('open'); ov.classList.add('show'); });

@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Stackly Admin Dashboard — Manage users, analytics, and settings.">
-  <title>Stackly — Admin Dashboard</title>
+  <meta name="description" content="Stackly Law Admin Dashboard — Manage attorneys, case analytics, and firm settings.">
+  <title>Stackly Law — Admin Dashboard</title>
   <link rel="stylesheet" href="dashboard.css">
 </head>
 
@@ -107,8 +107,8 @@
 
       <main class="dash-content">
         <div class="content-header">
-          <h1 id="greetingText">Good morning, Admin 🛡️</h1>
-          <p>You have full system access. Here's the platform overview.</p>
+          <h1 id="greetingText">Good morning, Admin</h1>
+          <p>Full system access — Law Firm Management Overview</p>
         </div>
 
         <!-- Stat Cards -->
@@ -135,7 +135,7 @@
               <span class="stat-badge badge-up">Active</span>
             </div>
             <div class="stat-value" id="statConsultants">—</div>
-            <div class="stat-label">Consultants</div>
+            <div class="stat-label">Attorneys</div>
           </div>
           <div class="stat-card" style="animation-delay:0.16s">
             <div class="stat-card-header">
@@ -219,27 +219,35 @@
             <div class="section-card-body">
               <div class="activity-feed">
                 <div class="activity-item">
-                  <div class="activity-dot teal">👤</div>
+                  <div class="activity-dot gold">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
                   <div class="activity-text">
-                    <p>New user registered: <b id="lastUser">—</b></p><span>Just now</span>
+                    <p>New attorney registered: <b id="lastUser">—</b></p><span>Just now</span>
                   </div>
                 </div>
                 <div class="activity-item">
-                  <div class="activity-dot green">✅</div>
+                  <div class="activity-dot green">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
                   <div class="activity-text">
                     <p>System health check passed</p><span>1 hour ago</span>
                   </div>
                 </div>
                 <div class="activity-item">
-                  <div class="activity-dot navy">🔐</div>
+                  <div class="activity-dot navy">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </div>
                   <div class="activity-text">
                     <p>Admin session initiated</p><span>Today</span>
                   </div>
                 </div>
                 <div class="activity-item">
-                  <div class="activity-dot teal">📊</div>
+                  <div class="activity-dot gold">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                  </div>
                   <div class="activity-text">
-                    <p>Monthly report generated</p><span>2 days ago</span>
+                    <p>Monthly case report generated</p><span>2 days ago</span>
                   </div>
                 </div>
               </div>
@@ -268,7 +276,7 @@
     const hr = new Date().getHours();
     document.getElementById('greetingText').textContent =
       (hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening') +
-      `, ${session ? session.name.split(' ')[0] : 'Admin'} 🛡️`;
+      `, ${session ? session.name.split(' ')[0] : 'Admin'}`;
 
     // ── Load users table from localStorage ───────────
     function loadUsers() {
@@ -301,7 +309,7 @@
         <td style="color:var(--text-secondary);">${u.email}</td>
         <td>
           <span class="pill ${u.role === 'admin' ? 'completed' : 'active'}">
-            ${u.role === 'admin' ? '🛡️ Admin' : '💼 Consultant'}
+            ${u.role === 'admin' ? 'Administrator' : 'Attorney'}
           </span>
         </td>
         <td style="color:var(--text-muted);">${new Date(u.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>

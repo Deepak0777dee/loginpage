@@ -62,7 +62,7 @@
     <nav class="sidebar-nav">
       <span class="nav-section-label">Main</span>
       <a class="nav-item" id="navBack" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</a>
-      <a class="nav-item" href="projects.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</a>
+      <a class="nav-item" href="projects.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Matters</a>
       <a class="nav-item" href="reports.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Reports</a>
       <span class="nav-section-label">Account</span>
       <a class="nav-item active" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
@@ -94,7 +94,7 @@
             <div class="profile-email" id="profileEmail">—</div>
             <div class="profile-since" id="profileSince">—</div>
             <div class="profile-stats">
-              <div class="ps-item"><div class="ps-val">12</div><div class="ps-lbl">Projects</div></div>
+              <div class="ps-item"><div class="ps-val">12</div><div class="ps-lbl">Matters</div></div>
               <div class="ps-item"><div class="ps-val">24</div><div class="ps-lbl">Clients</div></div>
               <div class="ps-item"><div class="ps-val">4.9</div><div class="ps-lbl">Rating</div></div>
             </div>
@@ -141,7 +141,7 @@
           <div class="form-section">
             <h3>🔔 Notification Preferences</h3>
             <div class="notif-toggle"><div class="notif-info"><p>Email Notifications</p><span>Receive updates via email</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
-            <div class="notif-toggle"><div class="notif-info"><p>Project Alerts</p><span>Get notified on project changes</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="notif-toggle"><div class="notif-info"><p>Matter Alerts</p><span>Get notified on case updates</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
             <div class="notif-toggle"><div class="notif-info"><p>Client Messages</p><span>Notify me of new client messages</span></div><button class="toggle-sw" onclick="this.classList.toggle('on')"></button></div>
             <div class="notif-toggle"><div class="notif-info"><p>Monthly Reports</p><span>Auto-send monthly summaries</span></div><button class="toggle-sw on" onclick="this.classList.toggle('on')"></button></div>
           </div>
@@ -172,7 +172,7 @@
     document.getElementById('sidebarAvatar').textContent = session.avatar;
     document.getElementById('headerAvatar').textContent  = session.avatar;
     document.getElementById('sidebarName').textContent   = session.name;
-    document.getElementById('sidebarRole').textContent   = session.role === 'admin' ? 'Administrator' : 'Consultant';
+    document.getElementById('sidebarRole').textContent   = session.role === 'admin' ? 'Administrator' : 'Attorney';
     document.getElementById('navBack').href = getDashboardUrl(session.role);
 
     document.getElementById('profileAv').textContent   = session.avatar;
@@ -181,13 +181,13 @@
     document.getElementById('profileSince').textContent= '📅 Member since ' + new Date(session.createdAt).toLocaleDateString('en-US',{month:'long',year:'numeric'});
 
     const badge = document.getElementById('profileRoleBadge');
-    badge.textContent = session.role === 'admin' ? '🛡️ Administrator' : '💼 Consultant';
+    badge.textContent = session.role === 'admin' ? '🛡️ Administrator' : '💼 Attorney';
     badge.className = 'profile-role-badge ' + (session.role === 'admin' ? 'badge-admin' : 'badge-consultant');
 
     document.getElementById('fldName').value    = session.name;
     document.getElementById('fldDisplay').value = session.avatar;
     document.getElementById('fldEmail').value   = session.email;
-    document.getElementById('fldRole').value    = session.role === 'admin' ? 'Administrator' : 'Consultant';
+    document.getElementById('fldRole').value    = session.role === 'admin' ? 'Administrator' : 'Attorney';
   }
   loadProfile();
 
